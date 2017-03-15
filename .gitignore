@@ -30,3 +30,5 @@
 
 #QtCreator files
 *.user
+*.autosave
+build*
