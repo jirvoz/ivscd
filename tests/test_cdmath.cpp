@@ -1,4 +1,3 @@
-#include <QString>
 #include <QtTest>
 
 #include "cdmath.h"
@@ -11,16 +10,18 @@ public:
     CDMathTests();
 
 private Q_SLOTS:
-    void testCase1();
+    void testAdd();
 };
 
 CDMathTests::CDMathTests()
 {
 }
 
-void CDMathTests::testCase1()
+void CDMathTests::testAdd()
 {
-    QVERIFY2(true, "Failure");
+    QVERIFY(CDMath::Add(1, 2) == 3);
+    QVERIFY(CDMath::Add(-3, 2) == -1);
+    QVERIFY(CDMath::Add(-3.5, 2.5) == -1);
 }
 
 QTEST_APPLESS_MAIN(CDMathTests)
