@@ -13,8 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    cdmath.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    ../../../../../pokus/mymath.h \
+    cdmath.h
 
 FORMS    += mainwindow.ui
