@@ -5,7 +5,7 @@
 class CDMath
 {
 public:
-    CDMath();
+    static double Add(double a, double b);
 };
 
 #endif // CDMATH_H
