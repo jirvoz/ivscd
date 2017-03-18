@@ -5,6 +5,7 @@
 CDMath::CDMath()
 {
     //initialize operators
+    initOperator(Operator::PARENTHESIS, 5, OpAsociativity::NONE);
     initOperator(Operator::ADD, 4, OpAsociativity::LEFT);
     initOperator(Operator::SUBTRACT, 4, OpAsociativity::LEFT);
     initOperator(Operator::MULTIPLY, 3, OpAsociativity::LEFT);
@@ -115,6 +116,14 @@ double CDMath::evaluate(QString expression)
 
         //reading operators
         switch (expression[i].toLatin1()) {
+        case '(':
+            operatorStack.push(Operator::PARENTHESIS);
+            break;
+        case ')':
+            while (operatorStack.top() != Operator::PARENTHESIS)
+                commitTopOperator();
+            commitTopOperator();	//pop parenthesis
+            break;
         case '+':
             operatorStack.push(Operator::ADD);
             break;

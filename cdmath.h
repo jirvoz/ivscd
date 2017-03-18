@@ -12,7 +12,15 @@ public:
     double evaluate(QString expression);
 
 private:
-    enum class Operator : int { ADD, SUBTRACT, MULTIPLY, DIVIDE, POWER, OPERATORS_COUNT };
+    enum class Operator { PARENTHESIS,
+                          ADD,
+                          SUBTRACT,
+                          MULTIPLY,
+                          DIVIDE,
+                          POWER,
+                          OPERATORS_COUNT
+                        };
+
     enum class OpAsociativity { NONE, LEFT, RIGHT };
 
     struct OpProperties {
