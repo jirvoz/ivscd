@@ -8,7 +8,6 @@ class CDMath
 {
 public:
     CDMath();
-    static double Add(double a, double b);
     static double Power(double a, double b);
     double Evaluate(QString expression);
 

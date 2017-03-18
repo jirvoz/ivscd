@@ -80,11 +80,6 @@ void CDMath::CommitOperator()
     }
 }
 
-double CDMath::Add(double a, double b)
-{
-    return a + b;
-}
-
 //very, very simple
 double CDMath::Power(double a, double b)
 {
