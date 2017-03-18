@@ -5,11 +5,11 @@
 CDMath::CDMath()
 {
     //initialize operators
-    InitOperator(Operator::ADD, 4, OpAsociativity::LEFT);
-    InitOperator(Operator::SUBTRACT, 4, OpAsociativity::LEFT);
-    InitOperator(Operator::MULTIPLY, 3, OpAsociativity::LEFT);
-    InitOperator(Operator::DIVIDE, 3, OpAsociativity::LEFT);
-    InitOperator(Operator::POWER, 2, OpAsociativity::RIGHT);
+    initOperator(Operator::ADD, 4, OpAsociativity::LEFT);
+    initOperator(Operator::SUBTRACT, 4, OpAsociativity::LEFT);
+    initOperator(Operator::MULTIPLY, 3, OpAsociativity::LEFT);
+    initOperator(Operator::DIVIDE, 3, OpAsociativity::LEFT);
+    initOperator(Operator::POWER, 2, OpAsociativity::RIGHT);
 }
 
 int CDMath::getOpPrecedence(Operator op)
@@ -22,13 +22,13 @@ CDMath::OpAsociativity CDMath::getOpAsociativity(Operator op)
     return opProperties[(int)op].asociativity;
 }
 
-void CDMath::InitOperator(Operator op, int prec, OpAsociativity asoc)
+void CDMath::initOperator(Operator op, int prec, OpAsociativity asoc)
 {
     OpProperties props = { prec, asoc };
     opProperties[(int)op] = props;
 }
 
-void CDMath::PushOperator(Operator op)
+void CDMath::pushOperator(Operator op)
 {
     //TODO while previous operators have better priority
     while (!operatorStack.isEmpty() &&
@@ -38,13 +38,13 @@ void CDMath::PushOperator(Operator op)
             && getOpPrecedence(op) < getOpPrecedence(operatorStack.top()))))
     {
         //commit top operator
-        CommitOperator();
+        commitTopOperator();
     }
 
     operatorStack.push(op);
 }
 
-void CDMath::CommitOperator()
+void CDMath::commitTopOperator()
 {
     Operator op = operatorStack.pop();
     int a, b;
@@ -73,7 +73,7 @@ void CDMath::CommitOperator()
     case Operator::POWER:
         b = numberStack.pop();
         a = numberStack.pop();
-        numberStack.push(Power(a, b));
+        numberStack.push(power(a, b));
         break;
     default:
         break;
@@ -81,7 +81,7 @@ void CDMath::CommitOperator()
 }
 
 //very, very simple
-double CDMath::Power(double a, double b)
+double CDMath::power(double a, double b)
 {
     double res = 1;
 
@@ -91,7 +91,7 @@ double CDMath::Power(double a, double b)
     return res;
 }
 
-double CDMath::Evaluate(QString expression)
+double CDMath::evaluate(QString expression)
 {
     int digitsRead = 0;	//number of consequent digits read
     int expLength = expression.length();
@@ -140,7 +140,7 @@ double CDMath::Evaluate(QString expression)
 
     while (!operatorStack.isEmpty())
     {
-        CommitOperator();
+        commitTopOperator();
     }
 
     return numberStack.pop();

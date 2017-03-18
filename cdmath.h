@@ -8,8 +8,8 @@ class CDMath
 {
 public:
     CDMath();
-    static double Power(double a, double b);
-    double Evaluate(QString expression);
+    static double power(double a, double b);
+    double evaluate(QString expression);
 
 private:
     enum class Operator : int { ADD, SUBTRACT, MULTIPLY, DIVIDE, POWER, OPERATORS_COUNT };
@@ -27,9 +27,9 @@ private:
     int getOpPrecedence(Operator op);
     OpAsociativity getOpAsociativity(Operator op);
 
-    void InitOperator(Operator op, int prec, CDMath::OpAsociativity asoc);
-    void PushOperator(Operator op);
-    void CommitOperator();
+    void initOperator(Operator op, int prec, CDMath::OpAsociativity asoc);
+    void pushOperator(Operator op);
+    void commitTopOperator();
 };
 
 #endif // CDMATH_H

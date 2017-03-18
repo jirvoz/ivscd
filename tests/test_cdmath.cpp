@@ -23,7 +23,7 @@ CDMathTests::CDMathTests()
 
 void CDMathTests::testEvaluate()
 {
-    QVERIFY(cdMath.Evaluate(QString("3 + 4")) == 7);
+    QVERIFY(cdMath.evaluate(QString("3 + 4")) == 7);
 }
 
 QTEST_APPLESS_MAIN(CDMathTests)
