@@ -11,13 +11,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ivscd
 TEMPLATE = app
 
+CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
     cdmath.cpp
 
 HEADERS  += mainwindow.h \
-    ../../../../../pokus/mymath.h \
     cdmath.h
 
 FORMS    += mainwindow.ui

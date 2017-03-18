@@ -7,6 +7,8 @@ class CDMathTests : public QObject
 {
     Q_OBJECT
 
+    CDMath cdMath;
+
 public:
     CDMathTests();
 
@@ -17,11 +19,12 @@ private Q_SLOTS:
 
 CDMathTests::CDMathTests()
 {
+    cdMath = CDMath();
 }
 
 void CDMathTests::testEvaluate()
 {
-    QVERIFY(CDMath::Evaluate(QString("3 + 4")) == 7);
+    QVERIFY(cdMath.Evaluate(QString("3 + 4")) == 7);
 }
 
 void CDMathTests::testAdd()
