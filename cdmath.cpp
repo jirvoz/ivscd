@@ -47,7 +47,7 @@ void CDMath::pushOperator(Operator op)
 void CDMath::commitTopOperator()
 {
     Operator op = operatorStack.pop();
-    int a, b;
+    double a, b;
 
     switch (op) {
     case Operator::ADD:

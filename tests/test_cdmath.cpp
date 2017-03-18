@@ -23,7 +23,9 @@ CDMathTests::CDMathTests()
 
 void CDMathTests::testEvaluate()
 {
-    QVERIFY(cdMath.evaluate(QString("3 + 4")) == 7);
+    QCOMPARE(cdMath.evaluate(QString("3 + 4")), 7.0);
+    QCOMPARE(cdMath.evaluate(QString("3 + 4 * 2")), 11.0);
+    QCOMPARE(cdMath.evaluate(QString("3 - 5 / 2")), 0.5);
 }
 
 QTEST_APPLESS_MAIN(CDMathTests)
