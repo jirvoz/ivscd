@@ -12,6 +12,16 @@ CDMath::CDMath()
     InitOperator(Operator::POWER, 2, OpAsociativity::RIGHT);
 }
 
+int CDMath::getOpPrecedence(Operator op)
+{
+    return opProperties[(int)op].precedence;
+}
+
+CDMath::OpAsociativity CDMath::getOpAsociativity(Operator op)
+{
+    return opProperties[(int)op].asociativity;
+}
+
 void CDMath::InitOperator(Operator op, int prec, OpAsociativity asoc)
 {
     OpProperties props = { prec, asoc };
@@ -22,7 +32,10 @@ void CDMath::PushOperator(Operator op)
 {
     //TODO while previous operators have better priority
     while (!operatorStack.isEmpty() &&
-           ((false) || (false)))
+        ((getOpAsociativity(op) == OpAsociativity::LEFT
+          && getOpPrecedence(op) <= getOpPrecedence(operatorStack.top()))
+        || (getOpAsociativity(op) == OpAsociativity::RIGHT
+            && getOpPrecedence(op) < getOpPrecedence(operatorStack.top()))))
     {
         //commit top operator
         CommitOperator();

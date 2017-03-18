@@ -25,6 +25,9 @@ private:
     QStack<double> numberStack;
     QStack<Operator> operatorStack;
 
+    int getOpPrecedence(Operator op);
+    OpAsociativity getOpAsociativity(Operator op);
+
     void InitOperator(Operator op, int prec, CDMath::OpAsociativity asoc);
     void PushOperator(Operator op);
     void CommitOperator();
