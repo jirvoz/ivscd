@@ -17,7 +17,6 @@ SOURCES += main.cpp\
     cdmath.cpp
 
 HEADERS  += mainwindow.h \
-    ../../../../../pokus/mymath.h \
     cdmath.h
 
 FORMS    += mainwindow.ui
