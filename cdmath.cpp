@@ -31,7 +31,7 @@ void CDMath::initOperator(Operator op, int prec, OpAsociativity asoc)
 
 void CDMath::pushOperator(Operator op)
 {
-    //TODO while previous operators have better priority
+    //while previous operators have better precedence
     while (!operatorStack.isEmpty() &&
         ((getOpAsociativity(op) == OpAsociativity::LEFT
           && getOpPrecedence(op) <= getOpPrecedence(operatorStack.top()))
@@ -81,9 +81,9 @@ void CDMath::commitTopOperator()
     }
 }
 
-//very, very simple
 double CDMath::power(double a, double b)
 {
+    //TODO expand this also for not-natural numbers
     double res = 1;
 
     for (int i = 0; i < b; i++)

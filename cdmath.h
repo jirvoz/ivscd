@@ -8,7 +8,22 @@ class CDMath
 {
 public:
     CDMath();
+
+    /**
+     * @brief Exponentiates base to exponent
+     * @param a base
+     * @param b exponent
+     * @return a^b
+     */
     static double power(double a, double b);
+
+    /**
+     * @brief Evaluates and calculates expression passed in QString
+     * Evaluates QString expression written in infix notation
+     * using Shunting-yard algorithm and calculates it.
+     * @param expression expression in QString to evaluate
+     * @return numeric result of expression
+     */
     double evaluate(QString expression);
 
 private:
