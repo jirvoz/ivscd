@@ -84,6 +84,7 @@ void CDMath::commitTopOperator()
 double CDMath::power(double a, double b)
 {
     //TODO expand this also for not-natural numbers
+    // dominicka to spravi
     double res = 1;
 
     for (int i = 0; i < b; i++)
