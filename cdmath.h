@@ -2,6 +2,7 @@
 #define CDMATH_H
 
 #include <QString>
+#include <QMap>
 #include <QStack>
 
 class CDMath
@@ -33,6 +34,7 @@ private:
                           MULTIPLY,
                           DIVIDE,
                           POWER,
+                          ABS,
                           OPERATORS_COUNT
                         };
 
@@ -44,6 +46,7 @@ private:
     };
 
     OpProperties opProperties[(int)Operator::OPERATORS_COUNT];
+    QMap<QString, Operator> functions;
     QStack<double> numberStack;
     QStack<Operator> operatorStack;
 

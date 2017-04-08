@@ -5,12 +5,17 @@
 CDMath::CDMath()
 {
     //initialize operators
-    initOperator(Operator::PARENTHESIS, 5, OpAsociativity::NONE);
-    initOperator(Operator::ADD, 4, OpAsociativity::LEFT);
-    initOperator(Operator::SUBTRACT, 4, OpAsociativity::LEFT);
+    //higher is better
+    initOperator(Operator::PARENTHESIS, 1, OpAsociativity::NONE);
+    initOperator(Operator::ADD, 2, OpAsociativity::LEFT);
+    initOperator(Operator::SUBTRACT, 2, OpAsociativity::LEFT);
     initOperator(Operator::MULTIPLY, 3, OpAsociativity::LEFT);
     initOperator(Operator::DIVIDE, 3, OpAsociativity::LEFT);
-    initOperator(Operator::POWER, 2, OpAsociativity::RIGHT);
+    initOperator(Operator::POWER, 4, OpAsociativity::RIGHT);
+    initOperator(Operator::ABS, 5, OpAsociativity::RIGHT);
+
+    //initialize functions
+    functions.insert("abs", Operator::ABS);
 }
 
 int CDMath::getOpPrecedence(Operator op)
@@ -76,6 +81,10 @@ void CDMath::commitTopOperator()
         a = numberStack.pop();
         numberStack.push(power(a, b));
         break;
+    case Operator::ABS:
+        a = numberStack.pop();
+        numberStack.push(a < 0 ? -a : a);
+        break;
     default:
         break;
     }
@@ -95,6 +104,7 @@ double CDMath::power(double a, double b)
 double CDMath::evaluate(QString expression)
 {
     int digitsRead = 0;	//number of consequent digits read
+    int lettersRead = 0;	//number of consequent letters (for functions) read
     int expLength = expression.length();
 
     numberStack.clear();
@@ -114,10 +124,22 @@ double CDMath::evaluate(QString expression)
             digitsRead = 0;
         }
 
+        //reading letters (for functions)
+        if (expression[i].isLower())
+        {
+            lettersRead++;
+            continue;
+        }
+        else if (lettersRead)
+        {
+            pushOperator(functions.value(expression.mid(i - lettersRead, lettersRead)));
+            lettersRead = 0;
+        }
+
         //reading operators
         switch (expression[i].toLatin1()) {
         case '(':
-            operatorStack.push(Operator::PARENTHESIS);
+            pushOperator(Operator::PARENTHESIS);
             break;
         case ')':
             while (operatorStack.top() != Operator::PARENTHESIS)
@@ -125,19 +147,19 @@ double CDMath::evaluate(QString expression)
             commitTopOperator();	//pop parenthesis
             break;
         case '+':
-            operatorStack.push(Operator::ADD);
+            pushOperator(Operator::ADD);
             break;
         case '-':
-            operatorStack.push(Operator::SUBTRACT);
+            pushOperator(Operator::SUBTRACT);
             break;
         case '*':
-            operatorStack.push(Operator::MULTIPLY);
+            pushOperator(Operator::MULTIPLY);
             break;
         case '/':
-            operatorStack.push(Operator::DIVIDE);
+            pushOperator(Operator::DIVIDE);
             break;
         case '^':
-            operatorStack.push(Operator::POWER);
+            pushOperator(Operator::POWER);
             break;
         default:
             break;
