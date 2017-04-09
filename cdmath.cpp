@@ -92,6 +92,12 @@ double CDMath::power(double a, double b)
     return res;
 }
 
+double CDMath::squareRoot(double a, double b)
+{
+   double y = 1/b;
+   power(a, y);
+}
+
 double CDMath::evaluate(QString expression)
 {
     int digitsRead = 0;	//number of consequent digits read
