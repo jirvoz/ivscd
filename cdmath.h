@@ -53,8 +53,37 @@ private:
     int getOpPrecedence(Operator op);
     OpAsociativity getOpAsociativity(Operator op);
 
+    /**
+     * @brief Assigns precedence and asociativity to passed operator.
+     *
+     * Creates (changes) record in opProperties array with
+     * structure OpProperties containing operator precedence
+     * and asociativity.
+     *
+     * @param op operator, which are properties assigned to
+     * @param prec precedence of the operator
+     * @param asoc asociativity of the operator
+     */
     void initOperator(Operator op, int prec, CDMath::OpAsociativity asoc);
+
+    /**
+     * @brief Pushes operator to operator stack with all necessities
+     * around it.
+     *
+     * Before pushing operator to operatorStack commits all operators
+     * with higher or equal precedence and left associativity and
+     * with higher precedence and right associativity.
+     *
+     * @param op operator to push
+     */
     void pushOperator(Operator op);
+
+    /**
+     * @brief Commits operator on the top of operator stack.
+     *
+     * Pops operator from the top of operatorStack
+     * and executes his action.
+     */
     void commitTopOperator();
 };
 
