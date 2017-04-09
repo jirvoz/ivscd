@@ -85,14 +85,16 @@ private:
      * @param op operator
      * @return precedence of operator
      */
-    int getOpPrecedence(Operator op);
+    inline int getOpPrecedence(Operator op)
+    { return opProperties[(int)op].precedence; }
 
     /**
      * @brief Gets operator asociativity.
      * @param op operator
      * @return asociatvity of operator
      */
-    OpAsociativity getOpAsociativity(Operator op);
+    inline OpAsociativity getOpAsociativity(Operator op)
+    { return opProperties[(int)op].asociativity; }
 
     /**
      * @brief Assigns precedence and asociativity to passed operator.

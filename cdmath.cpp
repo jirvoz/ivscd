@@ -18,16 +18,6 @@ CDMath::CDMath()
     functions.insert("abs", Operator::ABS);
 }
 
-int CDMath::getOpPrecedence(Operator op)
-{
-    return opProperties[(int)op].precedence;
-}
-
-CDMath::OpAsociativity CDMath::getOpAsociativity(Operator op)
-{
-    return opProperties[(int)op].asociativity;
-}
-
 void CDMath::initOperator(Operator op, int prec, OpAsociativity asoc)
 {
     OpProperties props = { prec, asoc };
