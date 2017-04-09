@@ -81,16 +81,87 @@ void CDMath::commitTopOperator()
     }
 }
 
-double CDMath::power(double a, double b)
+
+double CDMath::power(double x, double y)
 {
-    //TODO expand this also for not-natural numbers
-    // dominicka to spravi
-    double res = 1;
+    double logn = ln(x);
+    double num = 1;
+    double denum = 1.0;
+    double i = 1.0;
+    double result = 0;
+    double z = 0;
+    double zp = 0;
 
-    for (int i = 0; i < b; i++)
-        res *= a;
+    if (x > 0)
+    {
+        do
+        {
+            //previous fraction
+            zp = z;
+            //numerator
+            num *= y * logn;
+            //denumerator
+            denum *= i;
+            i++;
+            //new fraction
+            z = num / denum;
 
-    return res;
+            result += z;
+
+        } while (!(fabs(z - zp) <= 0.000001));
+
+        return 1 + result;
+    }
+    else // if base is negative, exponent must be integer
+    {
+        double res = 1;
+
+        if (y < 0)
+        {
+            for (int i = 0; i < fabs(y); i++)
+                res /= x;
+
+            return res;
+        }
+        else
+        {
+            for (int i = 0; i < y; i++)
+                res *= x;
+
+            return res;
+        }
+    }
+}
+
+double CDMath::ln(double x)
+{
+    double	L = -1;
+    double	num = 0;
+    double	z = (x - 1) / (x + 1);
+    double	powZ = z * z;
+
+    return 2 * z / cfrac(L, num, 500, powZ);
+}
+
+double CDMath::cfrac(double a, double number, unsigned int n, double powZ)
+{
+    a += 2;
+    number += a;
+    double H = number*powZ;
+
+    if (n == 0)
+        return 1;
+    else
+        return a - (H / cfrac(a,number,(n - 1),powZ));
+
+}
+
+double CDMath::fabs(double n)
+{
+    if(n >= 0)
+        return n; //if positive, return without any change
+    else
+        return 0 - n; //if negative, return a positive version
 }
 
 double CDMath::evaluate(QString expression)

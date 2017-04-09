@@ -11,11 +11,11 @@ public:
 
     /**
      * @brief Exponentiates base to exponent
-     * @param a base
-     * @param b exponent
-     * @return a^b
+     * @param x base
+     * @param y exponent
+     * @return x^y
      */
-    static double power(double a, double b);
+    static double power(double x, double y);
 
     /**
      * @brief Evaluates and calculates expression passed in QString
@@ -53,6 +53,30 @@ private:
     void initOperator(Operator op, int prec, CDMath::OpAsociativity asoc);
     void pushOperator(Operator op);
     void commitTopOperator();
+
+    /**
+     * @brief Calculates natural logarithm of a number
+     * @param x
+     * @return ln(x)
+     */
+    static double ln(double x);
+
+    /**
+     * @brief Supporting function for CDln
+     * @param a
+     * @param number
+     * @param n number of iterations
+     * @param powZ
+     * @return
+     */
+    static double cfrac(double a, double number, unsigned int n, double powZ);
+
+    /**
+     * @brief If necessary, transforms signed integer to its' unsigned value
+     * @param n number
+     * @return absolute value of a number
+     */
+    static double fabs(double n);
 };
 
 #endif // CDMATH_H
