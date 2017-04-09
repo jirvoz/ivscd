@@ -20,8 +20,10 @@ public:
 
     /**
      * @brief Evaluates and calculates expression passed in QString
+     *
      * Evaluates QString expression written in infix notation
      * using Shunting-yard algorithm and calculates it.
+     *
      * @param expression expression in QString to evaluate
      * @return numeric result of expression
      */
