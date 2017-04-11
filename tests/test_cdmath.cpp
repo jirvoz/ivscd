@@ -14,6 +14,7 @@ public:
 
 private Q_SLOTS:
     void testEvaluate();
+    void testUnaryMinus();
     void testAbs();
 };
 
@@ -30,6 +31,18 @@ void CDMathTests::testEvaluate()
     QCOMPARE(cdMath.evaluate(QString("3^2^3")), 6561.0);
     QCOMPARE(cdMath.evaluate(QString("(3 - 7.25) * 2")), -8.5);
     QCOMPARE(cdMath.evaluate(QString("(3 -( 7.5 + 8) / 2) * 5")), -23.75);
+}
+
+void CDMathTests::testUnaryMinus()
+{
+    QCOMPARE(cdMath.evaluate(QString("-5")), -5.0);
+    QCOMPARE(cdMath.evaluate(QString("3 + -5")), -2.0);
+    QCOMPARE(cdMath.evaluate(QString("3-(1+1)-5")), -4.0);
+    QCOMPARE(cdMath.evaluate(QString("(-1)*5")), -5.0);
+
+    QEXPECT_FAIL("", "Doesn't work for whole parenthesis, only for numbers, \
+jirvoz will fix it later", Continue);
+    QCOMPARE(cdMath.evaluate(QString("-(1)+5")), 4.0);
 }
 
 void CDMathTests::testAbs()

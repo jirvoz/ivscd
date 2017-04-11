@@ -93,8 +93,9 @@ double CDMath::power(double a, double b)
 
 double CDMath::evaluate(QString expression)
 {
+    bool lastWasNumber = false;
     int digitsRead = 0;	//number of consequent digits read
-    int lettersRead = 0;	//number of consequent letters (for functions) read
+    int lettersRead = 0; //number of consequent letters (for functions) read
     int expLength = expression.length();
 
     numberStack.clear();
@@ -103,7 +104,11 @@ double CDMath::evaluate(QString expression)
     for (int i = 0; i < expLength; i++)
     {
         //reading number
-        if (expression[i].isDigit() || expression[i] == '.')
+        if (expression[i].isDigit() || expression[i] == '.'
+            //check for unary minus
+            || (expression[i] == '-' && digitsRead == 0
+                && (!lastWasNumber || (!lastWasNumber && !operatorStack.isEmpty()
+                    && operatorStack.top() == Operator::PARENTHESIS))))
         {
             digitsRead++;
             continue;
@@ -112,6 +117,7 @@ double CDMath::evaluate(QString expression)
         {
             numberStack.push(expression.midRef(i - digitsRead, digitsRead).toDouble());
             digitsRead = 0;
+            lastWasNumber = true;
         }
 
         //reading letters (for functions)
@@ -124,32 +130,40 @@ double CDMath::evaluate(QString expression)
         {
             pushOperator(functions.value(expression.mid(i - lettersRead, lettersRead)));
             lettersRead = 0;
+            lastWasNumber = false;
         }
 
         //reading operators
         switch (expression[i].toLatin1()) {
         case '(':
             pushOperator(Operator::PARENTHESIS);
+            lastWasNumber = false;
             break;
         case ')':
             while (operatorStack.top() != Operator::PARENTHESIS)
                 commitTopOperator();
-            commitTopOperator();	//pop parenthesis
+            commitTopOperator();    //pop parenthesis
+            //no lastWasNumber=false, parenthesis is number after evaluation
             break;
         case '+':
             pushOperator(Operator::ADD);
+            lastWasNumber = false;
             break;
         case '-':
             pushOperator(Operator::SUBTRACT);
+            lastWasNumber = false;
             break;
         case '*':
             pushOperator(Operator::MULTIPLY);
+            lastWasNumber = false;
             break;
         case '/':
             pushOperator(Operator::DIVIDE);
+            lastWasNumber = false;
             break;
         case '^':
             pushOperator(Operator::POWER);
+            lastWasNumber = false;
             break;
         default:
             break;
