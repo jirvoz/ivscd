@@ -84,41 +84,33 @@ void CDMath::commitTopOperator()
 
 double CDMath::power(double x, double y)
 {
-    double logn = ln(x);
-    double num = 1;
-    double denum = 1.0;
-    double i = 1.0;
-    double result = 0;
-    double z = 0;
-    double zp = 0;
+    double num = 1.0; //numerator
+    double denum = 1.0; //denumerator
+    double fact = 1.0; //factorial
+    double res = 1; //result
+    double frac = 0; //fraction
+    double pfrac = 0; //previous fraction
 
     if (x > 0)
     {
         do
         {
-            //previous fraction
-            zp = z;
-            //numerator
-            num *= y * logn;
-            //denumerator
-            denum *= i;
-            i++;
-            //new fraction
-            z = num / denum;
+            pfrac = frac; //store previous fraction for checking condition
+            num *= y * ln(x);
+            denum *= fact;
+            fact++;
+            frac = num / denum; //new fraction
+            res += frac;
 
-            result += z;
+        } while (!(fabs(frac - pfrac) <= 1e-12));
 
-        } while (!(fabs(z - zp) <= 0.000001));
-
-        return 1 + result;
+        return res;
     }
     else // if base is negative, exponent must be integer
     {
-        double res = 1;
-
         if (y < 0)
         {
-            for (int i = 0; i < fabs(y); i++)
+            for (int i = 0; i < -(y); i++)
                 res /= x;
 
             return res;
@@ -135,33 +127,26 @@ double CDMath::power(double x, double y)
 
 double CDMath::ln(double x)
 {
-    double	L = -1;
-    double	num = 0;
     double	z = (x - 1) / (x + 1);
-    double	powZ = z * z;
 
-    return 2 * z / cfrac(L, num, 500, powZ);
+    return 2 * z / cfrac(-1, 0, 500, z*z);
 }
 
-double CDMath::cfrac(double a, double number, unsigned int n, double powZ)
+double CDMath::cfrac(double a, double num, unsigned int n, double powz)
 {
     a += 2;
-    number += a;
-    double H = number*powZ;
+    num += a;
 
     if (n == 0)
         return 1;
     else
-        return a - (H / cfrac(a,number,(n - 1),powZ));
+        return a - ((num*powz)/ cfrac(a,num,(n - 1),powz));
 
 }
 
 double CDMath::fabs(double n)
 {
-    if(n >= 0)
-        return n; //if positive, return without any change
-    else
-        return 0 - n; //if negative, return a positive version
+    return (n >= 0) ? n : -(n);
 }
 
 double CDMath::evaluate(QString expression)

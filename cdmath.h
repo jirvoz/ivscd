@@ -56,20 +56,20 @@ private:
 
     /**
      * @brief Calculates natural logarithm of a number
-     * @param x
+     * @param x number
      * @return ln(x)
      */
     static double ln(double x);
 
     /**
-     * @brief Supporting function for CDln
-     * @param a
-     * @param number
+     * @brief cfrac formula to help calculate ln(x)
+     * @param a an auxiliary number for Taylor series
+     * @param num number in numerator
      * @param n number of iterations
-     * @param powZ
+     * @param powz z*z; z is a formula z = (x - 1) / (x + 1)
      * @return
      */
-    static double cfrac(double a, double number, unsigned int n, double powZ);
+    static double cfrac(double a, double number, unsigned int n, double powz);
 
     /**
      * @brief If necessary, transforms signed integer to its' unsigned value
