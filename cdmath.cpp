@@ -148,6 +148,12 @@ double CDMath::fabs(double n)
     return (n >= 0) ? n : -(n);
 }
 
+double CDMath::squareRoot(double a, double b)
+{
+   double y = 1/b;
+   power(a, y);
+}
+
 double CDMath::evaluate(QString expression)
 {
     bool lastWasNumber = false;

@@ -22,6 +22,14 @@ public:
     static double power(double x, double y);
 
     /**
+     * @brief Returns the square root of number
+     * @param a base
+     * @param b square root
+     * @return a^(1/b)
+     */
+    static double squareRoot(double a, double b);
+
+    /**
      * @brief Evaluates and calculates expression passed in QString
      *
      * Evaluates QString expression written in infix notation
