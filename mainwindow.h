@@ -31,6 +31,8 @@ private slots:
     void clear();
     void clearAll();
 
+    void keyPressEvent(QKeyEvent *event );
+
 private:
     Ui::MainWindow *ui;
     bool resetInput;

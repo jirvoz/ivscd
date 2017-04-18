@@ -3,11 +3,14 @@
 
 #include "cdmath.h"
 #include <QDebug>
+#include <QKeyEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     resetInput(false),
+    resetResult(false),
+    binOp(false),
     memory(0)
 {
     ui->setupUi(this);  
@@ -42,8 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->bAllClear, SIGNAL(clicked()), this, SLOT(clearAll()));
 
-
-    //qDebug() << QString("- SD").right(4 - 2);
 
 
 }
@@ -166,4 +167,91 @@ void MainWindow::clearAll(){
    memory = 0;
    ui->inputLabel->setText(QString(""));
 
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event ){
+
+    if(event->key() == Qt::Key_Return){
+        ui->bEquals->animateClick();
+    }
+
+    if(event->key() == Qt::Key_Backspace){
+        ui->bBack->animateClick();
+    }
+
+    if(event->key() == Qt::Key_C){
+        ui->bClear->animateClick();
+    }
+    if(event->key() == Qt::Key_0 ){
+        ui->b0->animateClick();
+    }
+    if(event->key() == Qt::Key_1 ){
+        ui->b1->animateClick();
+    }
+    if(event->key() == Qt::Key_2 ){
+        ui->b2->animateClick();
+    }
+    if(event->key() == Qt::Key_3 ){
+        ui->b3->animateClick();
+    }
+    if(event->key() == Qt::Key_4 ){
+        ui->b4->animateClick();
+    }
+    if(event->key() == Qt::Key_5 ){
+        ui->b5->animateClick();
+    }
+    if(event->key() == Qt::Key_6 ){
+        ui->b6->animateClick();
+    }
+    if(event->key() == Qt::Key_7 ){
+        ui->b7->animateClick();
+    }
+    if(event->key() == Qt::Key_8 ){
+        ui->b8->animateClick();
+    }
+    if(event->key() == Qt::Key_9 ){
+        ui->b9->animateClick();
+    }
+    if(event->key() == Qt::Key_Period ){
+        ui->bDot->animateClick();
+    }
+    if(event->key() == Qt::Key_Slash ){
+        ui->bDiv->animateClick();
+    }
+    if(event->key() == Qt::Key_Asterisk ){
+        ui->bTimes->animateClick();
+    }
+    if(event->key() == Qt::Key_Plus ){
+        ui->bAdd->animateClick();
+    }
+    if(event->key() == Qt::Key_Minus ){
+        ui->bSub->animateClick();
+    }
+    if(event->key() == Qt::Key_Percent ){
+        ui->bMod->animateClick();
+    }
+    if(event->key() == Qt::Key_E ){
+        ui->bEuler->animateClick();
+    }
+    if(event->key() == Qt::Key_P ){
+        ui->bPi->animateClick();
+    }
+    if(event->key() == Qt::Key_ParenRight ){
+        ui->bParenR->animateClick();
+    }
+    if(event->key() == Qt::Key_ParenLeft ){
+        ui->bParenL->animateClick();
+    }
+    if(event->key() == Qt::Key_Exclam ){
+        ui->bFactorial->animateClick();
+    }
+    if(event->key() == Qt::Key_S){
+        ui->bSign->animateClick();
+    }
+    if(event->key() == 94){ // ^
+        ui->bPower->animateClick();
+    }
+    if(event->key() == Qt::Key_A){
+        ui->bAllClear->animateClick();
+    }
 }
