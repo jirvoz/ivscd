@@ -22,8 +22,22 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
+extra_clean.target = extra_clean
+extra_clean.CONFIG = phony
+extra_clean.commands += rm -rvf *.o moc_* ui_* build* ivscd tests/*.o tests/*.moc tests/test_cdmath doc
+clean.depends += extra_clean
+
+test.target = test
+test.depends = tests/tests.pro tests/test_cdmath.cpp
+test.commands += cd tests && qmake && make && ./test_cdmath
+
 doc.target = doc
 doc.depends = Doxyfile cdmath.h mainwindow.h cdmath.cpp mainwindow.cpp
 doc.commands = doxygen
 
-QMAKE_EXTRA_TARGETS += doc
+run.target = run
+run.CONFIG = phony
+run.depends = ivscd
+run.commands = ./ivscd
+
+QMAKE_EXTRA_TARGETS += clean extra_clean test doc run
