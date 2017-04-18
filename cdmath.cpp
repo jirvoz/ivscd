@@ -5,22 +5,17 @@
 CDMath::CDMath()
 {
     //initialize operators
-    initOperator(Operator::PARENTHESIS, 5, OpAsociativity::NONE);
-    initOperator(Operator::ADD, 4, OpAsociativity::LEFT);
-    initOperator(Operator::SUBTRACT, 4, OpAsociativity::LEFT);
+    //higher is better
+    initOperator(Operator::PARENTHESIS, 1, OpAsociativity::NONE);
+    initOperator(Operator::ADD, 2, OpAsociativity::LEFT);
+    initOperator(Operator::SUBTRACT, 2, OpAsociativity::LEFT);
     initOperator(Operator::MULTIPLY, 3, OpAsociativity::LEFT);
     initOperator(Operator::DIVIDE, 3, OpAsociativity::LEFT);
-    initOperator(Operator::POWER, 2, OpAsociativity::RIGHT);
-}
+    initOperator(Operator::POWER, 4, OpAsociativity::RIGHT);
+    initOperator(Operator::ABS, 5, OpAsociativity::RIGHT);
 
-int CDMath::getOpPrecedence(Operator op)
-{
-    return opProperties[(int)op].precedence;
-}
-
-CDMath::OpAsociativity CDMath::getOpAsociativity(Operator op)
-{
-    return opProperties[(int)op].asociativity;
+    //initialize functions
+    functions.insert("abs", Operator::ABS);
 }
 
 void CDMath::initOperator(Operator op, int prec, OpAsociativity asoc)
@@ -75,6 +70,10 @@ void CDMath::commitTopOperator()
         b = numberStack.pop();
         a = numberStack.pop();
         numberStack.push(power(a, b));
+        break;
+    case Operator::ABS:
+        a = numberStack.pop();
+        numberStack.push(a < 0 ? -a : a);
         break;
     default:
         break;
@@ -151,7 +150,9 @@ double CDMath::fabs(double n)
 
 double CDMath::evaluate(QString expression)
 {
+    bool lastWasNumber = false;
     int digitsRead = 0;	//number of consequent digits read
+    int lettersRead = 0; //number of consequent letters (for functions) read
     int expLength = expression.length();
 
     numberStack.clear();
@@ -160,7 +161,11 @@ double CDMath::evaluate(QString expression)
     for (int i = 0; i < expLength; i++)
     {
         //reading number
-        if (expression[i].isDigit() || expression[i] == '.')
+        if (expression[i].isDigit() || expression[i] == '.'
+            //check for unary minus
+            || (expression[i] == '-' && digitsRead == 0
+                && (!lastWasNumber || (!lastWasNumber && !operatorStack.isEmpty()
+                    && operatorStack.top() == Operator::PARENTHESIS))))
         {
             digitsRead++;
             continue;
@@ -169,32 +174,53 @@ double CDMath::evaluate(QString expression)
         {
             numberStack.push(expression.midRef(i - digitsRead, digitsRead).toDouble());
             digitsRead = 0;
+            lastWasNumber = true;
+        }
+
+        //reading letters (for functions)
+        if (expression[i].isLower())
+        {
+            lettersRead++;
+            continue;
+        }
+        else if (lettersRead)
+        {
+            pushOperator(functions.value(expression.mid(i - lettersRead, lettersRead)));
+            lettersRead = 0;
+            lastWasNumber = false;
         }
 
         //reading operators
         switch (expression[i].toLatin1()) {
         case '(':
-            operatorStack.push(Operator::PARENTHESIS);
+            pushOperator(Operator::PARENTHESIS);
+            lastWasNumber = false;
             break;
         case ')':
             while (operatorStack.top() != Operator::PARENTHESIS)
                 commitTopOperator();
-            commitTopOperator();	//pop parenthesis
+            commitTopOperator();    //pop parenthesis
+            //no lastWasNumber=false, parenthesis is number after evaluation
             break;
         case '+':
-            operatorStack.push(Operator::ADD);
+            pushOperator(Operator::ADD);
+            lastWasNumber = false;
             break;
         case '-':
-            operatorStack.push(Operator::SUBTRACT);
+            pushOperator(Operator::SUBTRACT);
+            lastWasNumber = false;
             break;
         case '*':
-            operatorStack.push(Operator::MULTIPLY);
+            pushOperator(Operator::MULTIPLY);
+            lastWasNumber = false;
             break;
         case '/':
-            operatorStack.push(Operator::DIVIDE);
+            pushOperator(Operator::DIVIDE);
+            lastWasNumber = false;
             break;
         case '^':
-            operatorStack.push(Operator::POWER);
+            pushOperator(Operator::POWER);
+            lastWasNumber = false;
             break;
         default:
             break;

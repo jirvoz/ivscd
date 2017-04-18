@@ -15,6 +15,8 @@ public:
 private Q_SLOTS:
     void testEvaluate();
     void testPower();
+    void testUnaryMinus();
+    void testAbs();
 };
 
 CDMathTests::CDMathTests()
@@ -49,6 +51,26 @@ void CDMathTests::testPower()
     QCOMPARE(cdMath.power(-2.5, -5), -0.01024);
 }
 
+void CDMathTests::testUnaryMinus()
+{
+    QCOMPARE(cdMath.evaluate(QString("-5")), -5.0);
+    QCOMPARE(cdMath.evaluate(QString("3 + -5")), -2.0);
+    QCOMPARE(cdMath.evaluate(QString("3-(1+1)-5")), -4.0);
+    QCOMPARE(cdMath.evaluate(QString("(-1)*5")), -5.0);
+
+    QEXPECT_FAIL("", "Doesn't work for whole parenthesis, only for numbers, \
+jirvoz will fix it later", Continue);
+    QCOMPARE(cdMath.evaluate(QString("-(1)+5")), 4.0);
+}
+
+void CDMathTests::testAbs()
+{
+    QCOMPARE(cdMath.evaluate(QString("abs(4)")), 4.0);
+    QCOMPARE(cdMath.evaluate(QString("abs(0)")), 0.0);
+    QCOMPARE(cdMath.evaluate(QString("abs(0-4)")), 4.0);
+    QCOMPARE(cdMath.evaluate(QString("2 + abs(1-4) - 3")), 2.0);
+    QCOMPARE(cdMath.evaluate(QString("2 + abs(1-4) * 3")), 11.0);
+}
 
 QTEST_APPLESS_MAIN(CDMathTests)
 
