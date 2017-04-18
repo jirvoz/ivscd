@@ -80,15 +80,72 @@ void CDMath::commitTopOperator()
     }
 }
 
-double CDMath::power(double a, double b)
+
+double CDMath::power(double x, double y)
 {
-    //TODO expand this also for not-natural numbers
-    double res = 1;
+    double num = 1.0; //numerator
+    double denum = 1.0; //denumerator
+    double fact = 1.0; //factorial
+    double res = 1; //result
+    double frac = 0; //fraction
+    double pfrac = 0; //previous fraction
 
-    for (int i = 0; i < b; i++)
-        res *= a;
+    if (x > 0)
+    {
+        do
+        {
+            pfrac = frac; //store previous fraction for checking condition
+            num *= y * ln(x);
+            denum *= fact;
+            fact++;
+            frac = num / denum; //new fraction
+            res += frac;
 
-    return res;
+        } while (!(fabs(frac - pfrac) <= 1e-12));
+
+        return res;
+    }
+    else // if base is negative, exponent must be integer
+    {
+        if (y < 0)
+        {
+            for (int i = 0; i < -(y); i++)
+                res /= x;
+
+            return res;
+        }
+        else
+        {
+            for (int i = 0; i < y; i++)
+                res *= x;
+
+            return res;
+        }
+    }
+}
+
+double CDMath::ln(double x)
+{
+    double	z = (x - 1) / (x + 1);
+
+    return 2 * z / cfrac(-1, 0, 500, z*z);
+}
+
+double CDMath::cfrac(double a, double num, unsigned int n, double powz)
+{
+    a += 2;
+    num += a;
+
+    if (n == 0)
+        return 1;
+    else
+        return a - ((num*powz)/ cfrac(a,num,(n - 1),powz));
+
+}
+
+double CDMath::fabs(double n)
+{
+    return (n >= 0) ? n : -(n);
 }
 
 double CDMath::evaluate(QString expression)

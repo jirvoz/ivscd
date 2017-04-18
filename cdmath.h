@@ -15,11 +15,11 @@ public:
 
     /**
      * @brief Exponentiates base to exponent
-     * @param a base
-     * @param b exponent
-     * @return a^b
+     * @param x base
+     * @param y exponent
+     * @return x^y
      */
-    static double power(double a, double b);
+    static double power(double x, double y);
 
     /**
      * @brief Evaluates and calculates expression passed in QString
@@ -128,6 +128,30 @@ private:
      * and executes his action.
      */
     void commitTopOperator();
+
+    /**
+     * @brief Calculates natural logarithm of a number
+     * @param x number
+     * @return ln(x)
+     */
+    static double ln(double x);
+
+    /**
+     * @brief cfrac formula to help calculate ln(x)
+     * @param a an auxiliary number for Taylor series
+     * @param num number in numerator
+     * @param n number of iterations
+     * @param powz z*z; z is a formula z = (x - 1) / (x + 1)
+     * @return
+     */
+    static double cfrac(double a, double number, unsigned int n, double powz);
+
+    /**
+     * @brief If necessary, transforms signed integer to its' unsigned value
+     * @param n number
+     * @return absolute value of a number
+     */
+    static double fabs(double n);
 };
 
 #endif // CDMATH_H
