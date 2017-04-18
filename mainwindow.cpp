@@ -11,7 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
     resetInput(false),
     resetResult(false),
     binOp(false),
-    memory(0)
+    memory(0),
+    lParenCount(0)
 {
     ui->setupUi(this);  
 
@@ -45,7 +46,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->bAllClear, SIGNAL(clicked()), this, SLOT(clearAll()));
 
+    connect(ui->bPi, SIGNAL(clicked()), this, SLOT(setPi()));
 
+    connect(ui->bEuler, SIGNAL(clicked()), this, SLOT(setEuler()));
+
+    connect(ui->bMR, SIGNAL(clicked()), this, SLOT(memoryRead()));
+
+    connect(ui->bMC, SIGNAL(clicked()), this, SLOT(memoryClear()));
+
+    connect(ui->bMS, SIGNAL(clicked()), this, SLOT(memorySet()));
+
+    connect(ui->bMadd, SIGNAL(clicked()), this, SLOT(memoryAdd()));
+
+    connect(ui->bMsub, SIGNAL(clicked()), this, SLOT(memorySub()));
 
 }
 
@@ -254,4 +267,37 @@ void MainWindow::keyPressEvent(QKeyEvent *event ){
     if(event->key() == Qt::Key_A){
         ui->bAllClear->animateClick();
     }
+}
+
+void MainWindow::setPi(){
+    ui->resultLabel->setText(QString::number(M_PI, 'g', 15));
+}
+
+void MainWindow::setEuler(){
+    ui->resultLabel->setText(QString::number(M_E, 'g', 15));
+}
+
+void MainWindow::memorySet(){
+
+    memory = ui->resultLabel->text().toDouble();
+}
+
+void MainWindow::memoryClear(){
+
+    memory = 0;
+}
+
+void MainWindow::memoryRead(){
+
+    ui->resultLabel->setText(QString::number(memory));
+}
+
+void MainWindow::memoryAdd(){
+
+    memory += ui->resultLabel->text().toDouble();
+}
+
+void MainWindow::memorySub(){
+
+    memory -= ui->resultLabel->text().toDouble();
 }

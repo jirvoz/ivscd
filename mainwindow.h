@@ -5,6 +5,7 @@
 #include <QString>
 #include <QPushButton>
 #include <cdmath.h>
+#include <math.h>
 
 
 
@@ -31,7 +32,16 @@ private slots:
     void clear();
     void clearAll();
 
+    void setPi();
+    void setEuler();
+
     void keyPressEvent(QKeyEvent *event );
+
+    void memorySet();
+    void memoryClear();
+    void memoryRead();
+    void memoryAdd();
+    void memorySub();
 
 private:
     Ui::MainWindow *ui;
@@ -42,6 +52,8 @@ private:
     CDMath math;
 
     double memory;
+
+    int lParenCount;
 
 
 };
