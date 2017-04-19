@@ -1,4 +1,5 @@
 #include <QStack>
+#include <cmath>
 
 #include "cdmath.h"
 
@@ -11,11 +12,25 @@ CDMath::CDMath()
     initOperator(Operator::SUBTRACT, 2, OpAsociativity::LEFT);
     initOperator(Operator::MULTIPLY, 3, OpAsociativity::LEFT);
     initOperator(Operator::DIVIDE, 3, OpAsociativity::LEFT);
+    initOperator(Operator::MOD, 3, OpAsociativity::LEFT);
     initOperator(Operator::POWER, 4, OpAsociativity::RIGHT);
+    initOperator(Operator::SQRT, 5, OpAsociativity::RIGHT);
     initOperator(Operator::ABS, 5, OpAsociativity::RIGHT);
+    initOperator(Operator::SIN, 5, OpAsociativity::RIGHT);
+    initOperator(Operator::COS, 5, OpAsociativity::RIGHT);
+    initOperator(Operator::TAN, 5, OpAsociativity::RIGHT);
+    initOperator(Operator::LN, 5, OpAsociativity::RIGHT);
+    initOperator(Operator::LOG, 5, OpAsociativity::RIGHT);
 
     //initialize functions
+    functions.insert("sqrt", Operator::SQRT);
     functions.insert("abs", Operator::ABS);
+    functions.insert("sin", Operator::SIN);
+    functions.insert("cos", Operator::COS);
+    functions.insert("tan", Operator::TAN);
+    functions.insert("tg", Operator::TAN); //alias for tan
+    functions.insert("ln", Operator::LN);
+    functions.insert("log", Operator::LOG);
 }
 
 void CDMath::initOperator(Operator op, int prec, OpAsociativity asoc)
@@ -66,14 +81,44 @@ void CDMath::commitTopOperator()
         a = numberStack.pop();
         numberStack.push(a / b);
         break;
+    case Operator::MOD:
+        b = numberStack.pop();
+        a = numberStack.pop();
+        //because of doubles
+        numberStack.push(a - b * floor(a / b));
+        break;
     case Operator::POWER:
         b = numberStack.pop();
         a = numberStack.pop();
         numberStack.push(power(a, b));
         break;
+    case Operator::SQRT:
+        a = numberStack.pop();
+        numberStack.push(power(a, 0.5));
+        break;
     case Operator::ABS:
         a = numberStack.pop();
         numberStack.push(a < 0 ? -a : a);
+        break;
+    case Operator::SIN:
+        a = numberStack.pop();
+        numberStack.push(sin(a));
+        break;
+    case Operator::COS:
+        a = numberStack.pop();
+        numberStack.push(cos(a));
+        break;
+    case Operator::TAN:
+        a = numberStack.pop();
+        numberStack.push(tan(a));
+        break;
+    case Operator::LN:
+        a = numberStack.pop();
+        numberStack.push(log(a));
+        break;
+    case Operator::LOG:
+        a = numberStack.pop();
+        numberStack.push(log10(a));
         break;
     default:
         break;
@@ -222,6 +267,10 @@ double CDMath::evaluate(QString expression)
             break;
         case '/':
             pushOperator(Operator::DIVIDE);
+            lastWasNumber = false;
+            break;
+        case '%':
+            pushOperator(Operator::MOD);
             lastWasNumber = false;
             break;
         case '^':
