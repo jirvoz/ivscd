@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>672</width>
+    <width>680</width>
     <height>541</height>
    </rect>
   </property>
@@ -175,7 +175,8 @@ color: rgb(255, 255, 255);</string>
       <property name="styleSheet">
        <string notr="true">QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}
 QPushButton:pressed { background-color: rgba(255, 255, 255, 75);  }
-QPushButton:hover:!pressed { border: 1px solid rgb(238, 152, 45); background-color: rgba(238, 152, 45, 75); }</string>
+QPushButton:hover:!pressed { border: 1px solid rgb(238, 152, 45); background-color: rgba(238, 152, 45, 75); }
+QPushButton:disabled {color: rgb(136, 136, 136)}</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
@@ -730,6 +731,9 @@ QPushButton:hover:!pressed { border: 1px solid rgb(238, 152, 45); background-col
          </property>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>)</string>
@@ -1307,7 +1311,7 @@ QPushButton:hover:!pressed { border: 1px solid rgb(238, 152, 45); background-col
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>672</width>
+     <width>680</width>
      <height>25</height>
     </rect>
    </property>
