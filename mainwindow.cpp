@@ -7,12 +7,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    resetInput(false),
-    resetResult(false),
-    binOp(false),
-    memory(0),
-    lParenCount(0)
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);  
 
@@ -26,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     }
 
-    QPushButton* binOpLst[] = {ui->bAdd, ui->bDiv, ui->bPower, ui->bSub, ui->bTimes,  };
+    QPushButton* binOpLst[] = {ui->bAdd, ui->bDiv, ui->bPower, ui->bSub, ui->bTimes };
 
     for(auto i:binOpLst){
 
@@ -60,6 +55,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->bMsub, SIGNAL(clicked()), this, SLOT(memorySub()));
 
+    connect(ui->bParenL, SIGNAL(clicked()), this, SLOT(addLparen()));
+
+    connect(ui->bParenR, SIGNAL(clicked()), this, SLOT(addRparen()));
+
+
 }
 
 MainWindow::~MainWindow()
@@ -77,7 +77,10 @@ void MainWindow::addNum(){
 
         ui->inputLabel->setText(QString(""));
 
-        resetInput = false;QString str = ui->resultLabel->text();
+        resetInput = false;
+    }
+    if(str == QString("-")){
+        str += " ";
     }
 
     if(str == QString("0") || resetResult){
@@ -91,6 +94,7 @@ void MainWindow::addNum(){
     ui->resultLabel->setText(str);
 
     binOp = false;
+    eqPressed = false;
 
 }
 
@@ -106,40 +110,89 @@ void MainWindow::addBinOp(){
 
     QString str = ui->inputLabel->text();
 
+
+
     if(binOp){
         str = str.left(str.length() - 2) + qobject_cast<QPushButton*>(sender())->text() + " ";
     }
+    else if(rParen){
+        str += " " + qobject_cast<QPushButton*>(sender())->text() + " ";
+    }
     else{
-        str += ui->resultLabel->text() + " " + qobject_cast<QPushButton*>(sender())->text() + " ";
+
+        if(ui->resultLabel->text().left(1) == QString("-") && ui->inputLabel->text().length() > 0 && lParen == false ){
+            str += "( " + ui->resultLabel->text() + " ) " + qobject_cast<QPushButton*>(sender())->text() + " ";
+        }
+        else{
+            if(lParen){
+                str += QString(" ");
+            }
+
+            str += ui->resultLabel->text() + " " + qobject_cast<QPushButton*>(sender())->text() + " ";
+        }
     }
 
     ui->inputLabel->setText(str);
 
     resetResult = true;
     binOp = true;
+    lParen = false;
+    rParen = false;
+    eqPressed = false;
 
 }
 
 void MainWindow::equalsPressed(){
+    if(!eqPressed){
+        if(resetInput){
+            ui->inputLabel->setText(QString(""));
 
+            resetInput = false;
+        }
+        QString str;
+        if(rParen){
+             str = ui->inputLabel->text();
+        }
+        else{
+             str = ui->inputLabel->text() + ui->resultLabel->text();
+        }
+        if(lParenCount > 0){
+            if(!rParen){
+                str += " ";
+            }
+            for(int i = 0; i < lParenCount; i++){
+                str += ")";
+            }
+        }
 
-    QString str = ui->inputLabel->text() + ui->resultLabel->text();
+        ui->inputLabel->setText(str);
 
-    ui->inputLabel->setText(str);
-
-    ui->resultLabel->setText(QString::number(math.evaluate(str)));
-
+        ui->resultLabel->setText(QString::number(math.evaluate(str)));
+    }
 
     resetResult = true;
     resetInput = true;
     binOp = false;
+    lParen = false;
+    rParen = false;
+    eqPressed = true;
+    lParenCount = 0;
+    ui->bParenR->setEnabled(false);
 }
 
 void MainWindow::addDot(){
 
     QString str = ui->resultLabel->text();
+
     if (str.right(1) != QString(".")){
-        ui->resultLabel->setText(ui->resultLabel->text() + ".");
+        if(str == "-"){
+            str += " 0";
+        }
+        else if(str == "- "){
+            str += "0";
+        }
+
+        ui->resultLabel->setText(str + ".");
 }
 
 }
@@ -157,11 +210,15 @@ void MainWindow::toggleSign(){
         }
 
         ui->resultLabel->setText(str);
-
+        eqPressed = false;
     }
 }
 
 void MainWindow::backSpace(){
+
+    if(resetResult){
+        ui->resultLabel->setText("");
+    }
 
     QString str = ui->resultLabel->text();
     str = str.left(str.length() - 1);
@@ -169,6 +226,8 @@ void MainWindow::backSpace(){
         str = "0";
     }
     ui->resultLabel->setText(str);
+
+    eqPressed = false;
 }
 
 void MainWindow::clear(){
@@ -179,7 +238,14 @@ void MainWindow::clearAll(){
    ui->resultLabel->setText(QString("0"));
    memory = 0;
    ui->inputLabel->setText(QString(""));
-
+   lParen = false;
+   binOp = false;
+   resetInput = false;
+   resetResult = false;
+   rParen = false;
+   eqPressed = false;
+   lParenCount = 0;
+   ui->bParenR->setEnabled(false);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event ){
@@ -271,15 +337,18 @@ void MainWindow::keyPressEvent(QKeyEvent *event ){
 
 void MainWindow::setPi(){
     ui->resultLabel->setText(QString::number(M_PI, 'g', 15));
+    eqPressed = false;
 }
 
 void MainWindow::setEuler(){
     ui->resultLabel->setText(QString::number(M_E, 'g', 15));
+    eqPressed = false;
 }
 
 void MainWindow::memorySet(){
 
     memory = ui->resultLabel->text().toDouble();
+
 }
 
 void MainWindow::memoryClear(){
@@ -300,4 +369,54 @@ void MainWindow::memoryAdd(){
 void MainWindow::memorySub(){
 
     memory -= ui->resultLabel->text().toDouble();
+}
+
+void MainWindow::addLparen(){
+
+    ui->bParenR->setEnabled(true);
+
+    if(resetInput){
+        ui->inputLabel->setText("");
+    }
+
+    if(rParen){
+        ui->inputLabel->setText(ui->inputLabel->text() + " * ");
+    }
+    ui->inputLabel->setText(ui->inputLabel->text() + "(");
+
+    ui->resultLabel->setText(QString("0"));
+    lParenCount++;
+    resetInput = false;
+    resetResult = false;
+    binOp = false;
+    lParen = true;
+    rParen = false;
+    eqPressed = false;
+}
+
+void MainWindow::addRparen(){
+
+    QString str = ui->inputLabel->text();
+
+    if(lParen){
+        str += " ";
+    }
+    if(rParen){
+        str += ")";
+    }
+    else{
+        str += ui->resultLabel->text() + " )";
+    }
+
+    ui->inputLabel->setText(str);
+    lParenCount--;
+    resetInput = false;
+    resetResult = false;
+    binOp = false;
+    lParen = false;
+    rParen = true;
+
+    if(lParenCount == 0){
+        ui->bParenR->setEnabled(false);
+    }
 }

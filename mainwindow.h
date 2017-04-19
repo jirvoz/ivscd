@@ -43,17 +43,23 @@ private slots:
     void memoryAdd();
     void memorySub();
 
+    void addLparen();
+    void addRparen();
+
 private:
     Ui::MainWindow *ui;
-    bool resetInput;
-    bool resetResult;
-    bool binOp;
+    bool resetInput = false;
+    bool resetResult = false;
+    bool binOp = false;
+    int lParenCount = 0;
+    bool lParen = false;
+    bool rParen = false;
+    bool eqPressed = false;
 
     CDMath math;
 
-    double memory;
+    double memory = 0.;
 
-    int lParenCount;
 
 
 };
