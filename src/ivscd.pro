@@ -22,4 +22,8 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
-RESOURCES +=
+doc.target = doc
+doc.depends = Doxyfile cdmath.h mainwindow.h cdmath.cpp mainwindow.cpp
+doc.commands = doxygen
+
+QMAKE_EXTRA_TARGETS += doc

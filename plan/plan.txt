@@ -1,0 +1,15 @@
+Termíny:
+	24.3.2017 základ gui a matematické knihovny
+	14.4.2017 betaverze aplikace
+	24.4.2017 odevzdání repozitáře
+
+Přidělení úkolů:
+	GUI: Jozef Méry
+	Matematická knihovna: Jiří Vozár
+	Testy: Dominika Labudová
+	Dokumentace: Vlastimil Rádsetoulal
+
+Komunikační kanály: Trello a Facebook
+
+Repozitář projektu: git@github.com:jirvoz/ivscd.git
+	přidán účet ivskontrola mezi spolupracovníky

@@ -32,4 +32,6 @@
 *.user
 *.autosave
 build*
+
 doc*
+Makefile
