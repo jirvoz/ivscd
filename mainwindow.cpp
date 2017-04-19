@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     }
 
-    QPushButton* binOpLst[] = {ui->bAdd, ui->bDiv, ui->bPower, ui->bSub, ui->bTimes };
+    QPushButton* binOpLst[] = {ui->bAdd, ui->bDiv, ui->bPower, ui->bSub, ui->bTimes, ui->bMod };
 
     for(auto i:binOpLst){
 
@@ -58,6 +58,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->bParenL, SIGNAL(clicked()), this, SLOT(addLparen()));
 
     connect(ui->bParenR, SIGNAL(clicked()), this, SLOT(addRparen()));
+
+    connect(ui->bReciproc, SIGNAL(clicked()), this, SLOT(reciproc()));
 
 
 }
@@ -231,6 +233,11 @@ void MainWindow::backSpace(){
 }
 
 void MainWindow::clear(){
+
+    if(resetInput){
+        ui->inputLabel->setText("");
+    }
+
    ui->resultLabel->setText(QString("0"));
 }
 
@@ -419,4 +426,11 @@ void MainWindow::addRparen(){
     if(lParenCount == 0){
         ui->bParenR->setEnabled(false);
     }
+}
+
+void MainWindow::reciproc(){
+    QString str = ui->resultLabel->text();
+    ui->resultLabel->setText("1");
+    QMetaObject::invokeMethod(ui->bDiv, "clicked");
+    ui->resultLabel->setText(str);
 }

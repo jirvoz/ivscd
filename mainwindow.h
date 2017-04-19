@@ -46,6 +46,8 @@ private slots:
     void addLparen();
     void addRparen();
 
+    void reciproc();
+
 private:
     Ui::MainWindow *ui;
     bool resetInput = false;

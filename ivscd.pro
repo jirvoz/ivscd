@@ -21,3 +21,5 @@ HEADERS  += mainwindow.h \
     cdmath.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES +=
