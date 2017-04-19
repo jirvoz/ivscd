@@ -355,7 +355,7 @@ void MainWindow::setEuler(){
 void MainWindow::memorySet(){
 
     memory = ui->resultLabel->text().toDouble();
-
+    resetResult = true;
 }
 
 void MainWindow::memoryClear(){
@@ -366,16 +366,19 @@ void MainWindow::memoryClear(){
 void MainWindow::memoryRead(){
 
     ui->resultLabel->setText(QString::number(memory));
+    resetResult = true;
 }
 
 void MainWindow::memoryAdd(){
 
     memory += ui->resultLabel->text().toDouble();
+    resetResult = true;
 }
 
 void MainWindow::memorySub(){
 
     memory -= ui->resultLabel->text().toDouble();
+    resetResult = true;
 }
 
 void MainWindow::addLparen(){
