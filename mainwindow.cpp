@@ -61,6 +61,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->bReciproc, SIGNAL(clicked()), this, SLOT(reciproc()));
 
+    connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(openAbout()));
+
 }
 
 MainWindow::~MainWindow()
@@ -339,6 +341,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event ){
     if(event->key() == Qt::Key_A){
         ui->bAllClear->animateClick();
     }
+    if(event->key() == Qt::Key_F1){
+        openAbout();
+    }
 }
 
 void MainWindow::setPi(){
@@ -435,4 +440,13 @@ void MainWindow::reciproc(){
     ui->resultLabel->setText("1");
     QMetaObject::invokeMethod(ui->bDiv, "clicked");
     ui->resultLabel->setText(str);
+}
+
+void MainWindow::openAbout(){
+
+    QMessageBox msgBox;
+    msgBox.setText("Simple Calculator app created for IVS 2017.\nCreated by team Core Dumped:\n       Dominika Labudová\n       Jozef Méry\n       Vlastimil Rádsetoulal\n       Jiří Vozár");
+    msgBox.setWindowTitle("About");
+    msgBox.exec();
+
 }

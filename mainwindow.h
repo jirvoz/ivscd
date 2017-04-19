@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <cdmath.h>
 #include <math.h>
-
+#include <QMessageBox>
 
 
 namespace Ui {
@@ -47,6 +47,8 @@ private slots:
     void addRparen();
 
     void reciproc();
+
+    void openAbout();
 
 private:
     Ui::MainWindow *ui;

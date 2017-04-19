@@ -20,7 +20,7 @@
    <string>Calculator</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: qlineargradient(spread:pad, x1:0.502, y1:0, x2:0.521531, y2:1, stop:0 rgba(19, 21, 130, 255), stop:1 rgba(0, 0, 0, 255));</string>
+   <string notr="true">QWidget{background-color: qlineargradient(spread:pad, x1:0.502, y1:0, x2:0.521531, y2:1, stop:0 rgba(19, 21, 130, 255), stop:1 rgba(0, 0, 0, 255)); }</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
@@ -1302,6 +1302,31 @@ QPushButton:hover:!pressed { border: 1px solid rgb(238, 152, 45); background-col
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>672</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
