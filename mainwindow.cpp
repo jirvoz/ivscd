@@ -61,7 +61,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->bReciproc, SIGNAL(clicked()), this, SLOT(reciproc()));
 
-
 }
 
 MainWindow::~MainWindow()
