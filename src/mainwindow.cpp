@@ -1,118 +1,452 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "cdmath.h"
+#include <QDebug>
+#include <QKeyEvent>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-    cdMath = CDMath();
+    ui->setupUi(this);  
+
+
+
+    QPushButton* numLst[] = {ui->b0, ui->b1, ui->b2, ui->b3, ui->b4, ui->b5, ui->b6, ui->b7, ui->b8, ui->b9 };
+
+    for(auto i:numLst){
+
+        connect(i, SIGNAL(clicked()), this, SLOT(addNum()));
+
+    }
+
+    QPushButton* binOpLst[] = {ui->bAdd, ui->bDiv, ui->bPower, ui->bSub, ui->bTimes, ui->bMod };
+
+    for(auto i:binOpLst){
+
+        connect(i, SIGNAL(clicked()), this, SLOT(addBinOp()));
+
+    }
+
+    connect(ui->bEquals, SIGNAL(clicked()), this, SLOT(equalsPressed()));
+
+    connect(ui->bDot, SIGNAL(clicked()), this, SLOT(addDot()));
+
+    connect(ui->bSign, SIGNAL(clicked()), this, SLOT(toggleSign()));
+
+    connect(ui->bBack, SIGNAL(clicked()), this, SLOT(backSpace()));
+
+    connect(ui->bClear, SIGNAL(clicked()), this, SLOT(clear()));
+
+    connect(ui->bAllClear, SIGNAL(clicked()), this, SLOT(clearAll()));
+
+    connect(ui->bPi, SIGNAL(clicked()), this, SLOT(setPi()));
+
+    connect(ui->bEuler, SIGNAL(clicked()), this, SLOT(setEuler()));
+
+    connect(ui->bMR, SIGNAL(clicked()), this, SLOT(memoryRead()));
+
+    connect(ui->bMC, SIGNAL(clicked()), this, SLOT(memoryClear()));
+
+    connect(ui->bMS, SIGNAL(clicked()), this, SLOT(memorySet()));
+
+    connect(ui->bMadd, SIGNAL(clicked()), this, SLOT(memoryAdd()));
+
+    connect(ui->bMsub, SIGNAL(clicked()), this, SLOT(memorySub()));
+
+    connect(ui->bParenL, SIGNAL(clicked()), this, SLOT(addLparen()));
+
+    connect(ui->bParenR, SIGNAL(clicked()), this, SLOT(addRparen()));
+
+    connect(ui->bReciproc, SIGNAL(clicked()), this, SLOT(reciproc()));
+
+    connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(openAbout()));
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-/*
-void MainWindow::on_pushButton_clicked()
-{
-    ui->lineEdit->setText(QString::number(cdMath.evaluate(ui->lineEdit->text())));
-}
-*/
 
-void MainWindow::on_B_0_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "0");
-}
 
-void MainWindow::on_B_1_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "1");
-}
+void MainWindow::addNum(){
 
-void MainWindow::on_B_2_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "2");
-}
+    QString num = qobject_cast<QPushButton*>(sender())->text();
+    QString str = ui->resultLabel->text();
 
-void MainWindow::on_B_3_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "3");
-}
+    if(resetInput){
 
-void MainWindow::on_B_4_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "4");
-}
+        ui->inputLabel->setText(QString(""));
 
-void MainWindow::on_B_5_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "5");
+        resetInput = false;
+    }
+    if(str == QString("-")){
+        str += " ";
+    }
+
+    if(str == QString("0") || resetResult){
+        str = num;
+        resetResult = false;
+    }
+    else{
+        str += num;
+    }
+
+    ui->resultLabel->setText(str);
+
+    binOp = false;
+    eqPressed = false;
+
 }
 
-void MainWindow::on_B_6_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "6");
+void MainWindow::addBinOp(){
+
+    if(resetInput){
+
+        ui->inputLabel->setText(QString(""));
+
+        resetInput = false;
+    }
+
+
+    QString str = ui->inputLabel->text();
+
+
+
+    if(binOp){
+        str = str.left(str.length() - 2) + qobject_cast<QPushButton*>(sender())->text() + " ";
+    }
+    else if(rParen){
+        str += " " + qobject_cast<QPushButton*>(sender())->text() + " ";
+    }
+    else{
+
+        if(ui->resultLabel->text().left(1) == QString("-") && ui->inputLabel->text().length() > 0 && lParen == false ){
+            str += "( " + ui->resultLabel->text() + " ) " + qobject_cast<QPushButton*>(sender())->text() + " ";
+        }
+        else{
+            if(lParen){
+                str += QString(" ");
+            }
+
+            str += ui->resultLabel->text() + " " + qobject_cast<QPushButton*>(sender())->text() + " ";
+        }
+    }
+
+    ui->inputLabel->setText(str);
+
+    resetResult = true;
+    binOp = true;
+    lParen = false;
+    rParen = false;
+    eqPressed = false;
+
 }
 
-void MainWindow::on_B_7_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "7");
+void MainWindow::equalsPressed(){
+    if(!eqPressed){
+        if(resetInput){
+            ui->inputLabel->setText(QString(""));
+
+            resetInput = false;
+        }
+        QString str;
+        if(rParen){
+             str = ui->inputLabel->text();
+        }
+        else{
+             str = ui->inputLabel->text() + ui->resultLabel->text();
+        }
+        if(lParenCount > 0){
+            if(!rParen){
+                str += " ";
+            }
+            for(int i = 0; i < lParenCount; i++){
+                str += ")";
+            }
+        }
+
+        ui->inputLabel->setText(str);
+
+        ui->resultLabel->setText(QString::number(math.evaluate(str)));
+    }
+
+    resetResult = true;
+    resetInput = true;
+    binOp = false;
+    lParen = false;
+    rParen = false;
+    eqPressed = true;
+    lParenCount = 0;
+    ui->bParenR->setEnabled(false);
 }
 
-void MainWindow::on_B_8_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "8");
+void MainWindow::addDot(){
+
+    QString str = ui->resultLabel->text();
+
+    if (str.right(1) != QString(".")){
+        if(str == "-"){
+            str += " 0";
+        }
+        else if(str == "- "){
+            str += "0";
+        }
+
+        ui->resultLabel->setText(str + ".");
 }
 
-void MainWindow::on_B_9_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "9");
 }
 
-void MainWindow::on_B_plus_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "+");
+void MainWindow::toggleSign(){
+
+    QString str = ui->resultLabel->text();
+    if(str != "0" && str != "0."){
+        if(str.left(1) == QString("-")){
+            str = str.right(str.length() - 2);
+
+        }
+        else{
+            str = "- " + str;
+        }
+
+        ui->resultLabel->setText(str);
+        eqPressed = false;
+    }
 }
 
-void MainWindow::on_B_minus_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "-");
+void MainWindow::backSpace(){
+
+    if(resetResult){
+        ui->resultLabel->setText("");
+    }
+
+    QString str = ui->resultLabel->text();
+    str = str.left(str.length() - 1);
+    if(str.length() == 0){
+        str = "0";
+    }
+    ui->resultLabel->setText(str);
+
+    eqPressed = false;
 }
 
-void MainWindow::on_B_times_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "*");
+void MainWindow::clear(){
+
+    if(resetInput){
+        ui->inputLabel->setText("");
+    }
+
+   ui->resultLabel->setText(QString("0"));
 }
 
-void MainWindow::on_B_div_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "/");
+void MainWindow::clearAll(){
+   ui->resultLabel->setText(QString("0"));
+   memory = 0;
+   ui->inputLabel->setText(QString(""));
+   lParen = false;
+   binOp = false;
+   resetInput = false;
+   resetResult = false;
+   rParen = false;
+   eqPressed = false;
+   lParenCount = 0;
+   ui->bParenR->setEnabled(false);
 }
 
-void MainWindow::on_B_leftBrace_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + "(");
+void MainWindow::keyPressEvent(QKeyEvent *event ){
+
+    if(event->key() == Qt::Key_Return){
+        ui->bEquals->animateClick();
+    }
+
+    if(event->key() == Qt::Key_Backspace){
+        ui->bBack->animateClick();
+    }
+
+    if(event->key() == Qt::Key_C){
+        ui->bClear->animateClick();
+    }
+    if(event->key() == Qt::Key_0 ){
+        ui->b0->animateClick();
+    }
+    if(event->key() == Qt::Key_1 ){
+        ui->b1->animateClick();
+    }
+    if(event->key() == Qt::Key_2 ){
+        ui->b2->animateClick();
+    }
+    if(event->key() == Qt::Key_3 ){
+        ui->b3->animateClick();
+    }
+    if(event->key() == Qt::Key_4 ){
+        ui->b4->animateClick();
+    }
+    if(event->key() == Qt::Key_5 ){
+        ui->b5->animateClick();
+    }
+    if(event->key() == Qt::Key_6 ){
+        ui->b6->animateClick();
+    }
+    if(event->key() == Qt::Key_7 ){
+        ui->b7->animateClick();
+    }
+    if(event->key() == Qt::Key_8 ){
+        ui->b8->animateClick();
+    }
+    if(event->key() == Qt::Key_9 ){
+        ui->b9->animateClick();
+    }
+    if(event->key() == Qt::Key_Period ){
+        ui->bDot->animateClick();
+    }
+    if(event->key() == Qt::Key_Slash ){
+        ui->bDiv->animateClick();
+    }
+    if(event->key() == Qt::Key_Asterisk ){
+        ui->bTimes->animateClick();
+    }
+    if(event->key() == Qt::Key_Plus ){
+        ui->bAdd->animateClick();
+    }
+    if(event->key() == Qt::Key_Minus ){
+        ui->bSub->animateClick();
+    }
+    if(event->key() == Qt::Key_Percent ){
+        ui->bMod->animateClick();
+    }
+    if(event->key() == Qt::Key_E ){
+        ui->bEuler->animateClick();
+    }
+    if(event->key() == Qt::Key_P ){
+        ui->bPi->animateClick();
+    }
+    if(event->key() == Qt::Key_ParenRight ){
+        ui->bParenR->animateClick();
+    }
+    if(event->key() == Qt::Key_ParenLeft ){
+        ui->bParenL->animateClick();
+    }
+    if(event->key() == Qt::Key_Exclam ){
+        ui->bFactorial->animateClick();
+    }
+    if(event->key() == Qt::Key_S){
+        ui->bSign->animateClick();
+    }
+    if(event->key() == 94){ // ^
+        ui->bPower->animateClick();
+    }
+    if(event->key() == Qt::Key_A){
+        ui->bAllClear->animateClick();
+    }
+    if(event->key() == Qt::Key_F1){
+        openAbout();
+    }
 }
 
-void MainWindow::on_B_rightBrace_clicked()
-{
-    ui->inputField->setText(ui->inputField->text() + ")");
+void MainWindow::setPi(){
+    ui->resultLabel->setText(QString::number(M_PI, 'g', 15));
+    eqPressed = false;
 }
 
-void MainWindow::on_B_equals_clicked()
-{
-
-    ui->resultLabel->setText(QString::number(cdMath.evaluate(ui->inputField->text())));
-    ui->inputField->setText(QString(""));
+void MainWindow::setEuler(){
+    ui->resultLabel->setText(QString::number(M_E, 'g', 15));
+    eqPressed = false;
 }
 
+void MainWindow::memorySet(){
 
+    memory = ui->resultLabel->text().toDouble();
+    resetResult = true;
+}
 
+void MainWindow::memoryClear(){
 
+    memory = 0;
+}
 
+void MainWindow::memoryRead(){
 
+    ui->resultLabel->setText(QString::number(memory));
+    resetResult = true;
+}
 
+void MainWindow::memoryAdd(){
 
+    memory += ui->resultLabel->text().toDouble();
+    resetResult = true;
+}
 
+void MainWindow::memorySub(){
 
+    memory -= ui->resultLabel->text().toDouble();
+    resetResult = true;
+}
+
+void MainWindow::addLparen(){
+
+    ui->bParenR->setEnabled(true);
+
+    if(resetInput){
+        ui->inputLabel->setText("");
+    }
+
+    if(rParen){
+        ui->inputLabel->setText(ui->inputLabel->text() + " * ");
+    }
+    ui->inputLabel->setText(ui->inputLabel->text() + "(");
+
+    ui->resultLabel->setText(QString("0"));
+    lParenCount++;
+    resetInput = false;
+    resetResult = false;
+    binOp = false;
+    lParen = true;
+    rParen = false;
+    eqPressed = false;
+}
+
+void MainWindow::addRparen(){
+
+    QString str = ui->inputLabel->text();
+
+    if(lParen){
+        str += " ";
+    }
+    if(rParen){
+        str += ")";
+    }
+    else{
+        str += ui->resultLabel->text() + " )";
+    }
+
+    ui->inputLabel->setText(str);
+    lParenCount--;
+    resetInput = false;
+    resetResult = false;
+    binOp = false;
+    lParen = false;
+    rParen = true;
+
+    if(lParenCount == 0){
+        ui->bParenR->setEnabled(false);
+    }
+}
+
+void MainWindow::reciproc(){
+    QString str = ui->resultLabel->text();
+    ui->resultLabel->setText("1");
+    QMetaObject::invokeMethod(ui->bDiv, "clicked");
+    ui->resultLabel->setText(str);
+}
+
+void MainWindow::openAbout(){
+
+    QMessageBox msgBox;
+    msgBox.setText("Simple Calculator app created for IVS 2017.\nCreated by team Core Dumped:\n       Dominika Labudová\n       Jozef Méry\n       Vlastimil Rádsetoulal\n       Jiří Vozár");
+    msgBox.setWindowTitle("About");
+    msgBox.exec();
+
+}
