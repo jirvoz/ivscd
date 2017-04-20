@@ -1,0 +1,9 @@
+Package: ivscd
+Version: 1.0-1
+Section: base
+Priority: optional
+Architecture: amd64
+Depends:
+Maintainer: Jiri Vozar <xvozar04@stud.fit.vutbr.cz>
+Description: IVSCD Calculator
+ Calculator processing basic mathematical functions, standart deviation, factorial, logarithm, natural logarithm and goniometric functions.
