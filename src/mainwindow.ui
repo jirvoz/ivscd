@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
-    <height>624</height>
+    <width>764</width>
+    <height>472</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,7 +20,8 @@
    <string>Calculator</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget{background-color: qlineargradient(spread:pad, x1:0.502, y1:0, x2:0.521531, y2:1, stop:0 rgba(19, 21, 130, 255), stop:1 rgba(0, 0, 0, 255)); }</string>
+   <string notr="true">QWidget{background-color: qlineargradient(spread:pad, x1:0.502, y1:0, x2:0.521531, y2:1, stop:0 rgba(19, 21, 130, 255), stop:1 rgba(0, 0, 0, 255)); }
+font-family: Ubuntu;</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
@@ -46,7 +47,6 @@
      <widget class="QFrame" name="displayFrame">
       <property name="styleSheet">
        <string notr="true">color: white;
-font-family: Purisa;
 </string>
       </property>
       <property name="frameShape">
@@ -105,7 +105,7 @@ font-family: Purisa;
             </property>
             <property name="font">
              <font>
-              <family>Purisa</family>
+              <family>Ubuntu</family>
               <pointsize>20</pointsize>
              </font>
             </property>
@@ -124,7 +124,7 @@ font-family: Purisa;
             </property>
             <property name="font">
              <font>
-              <family>Purisa</family>
+              <family>Ubuntu</family>
              </font>
             </property>
             <property name="text">
@@ -145,7 +145,7 @@ font-family: Purisa;
         <widget class="QLabel" name="resultLabel">
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>30</pointsize>
           </font>
          </property>
@@ -170,7 +170,7 @@ font-family: Purisa;
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>20</pointsize>
           </font>
          </property>
@@ -189,7 +189,7 @@ font-family: Purisa;
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>20</pointsize>
           </font>
          </property>
@@ -208,7 +208,7 @@ font-family: Purisa;
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>20</pointsize>
           </font>
          </property>
@@ -278,7 +278,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -305,7 +305,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -335,7 +335,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -362,7 +362,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -389,7 +389,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -419,7 +419,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -446,7 +446,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -473,7 +473,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>50</weight>
            <italic>false</italic>
@@ -503,7 +503,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -530,7 +530,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -557,7 +557,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -587,7 +587,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -614,7 +614,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -641,7 +641,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -668,7 +668,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -695,7 +695,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -722,7 +722,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -752,7 +752,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -782,7 +782,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -812,7 +812,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -842,7 +842,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -869,7 +869,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -899,7 +899,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>30</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -929,7 +929,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -959,7 +959,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -989,7 +989,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1019,7 +1019,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1046,7 +1046,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1073,7 +1073,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1100,7 +1100,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1127,7 +1127,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1154,7 +1154,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1181,7 +1181,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1208,7 +1208,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1235,7 +1235,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>50</weight>
            <italic>false</italic>
@@ -1262,7 +1262,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1289,7 +1289,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1316,7 +1316,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1346,7 +1346,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </property>
          <property name="font">
           <font>
-           <family>Purisa</family>
+           <family>Ubuntu</family>
            <pointsize>14</pointsize>
            <weight>75</weight>
            <italic>false</italic>
@@ -1366,7 +1366,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
       </layout>
      </widget>
     </item>
-    <item row="1" column="0" rowspan="2">
+    <item row="1" column="0" rowspan="2" alignment="Qt::AlignHCenter">
      <widget class="QFrame" name="leftMenu">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -1374,10 +1374,16 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color:  qlineargradient(spread:pad, x1:0, y1:0.528, x2:1, y2:0.534, stop:0 rgba(65, 65, 65, 255), stop:1 rgba(131, 131, 131, 255));
+       <string notr="true">QFrame{ background-color:  qlineargradient(spread:pad, x1:0, y1:0.528, x2:1, y2:0.534, stop:0 rgba(65, 65, 65, 255), stop:1 rgba(131, 131, 131, 255)); }
 
-QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}</string>
+
+QPushButton { background-color: rgba(0, 0, 0, 0); }
+QPushButton:pressed { background-color: rgba(255, 255, 255, 75);  }
+QPushButton:hover:!pressed { border: 1px solid rgb(238, 152, 45); background-color: rgba(238, 152, 45, 75); }</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::Box</enum>
@@ -1390,22 +1396,27 @@ QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0">
        <property name="spacing">
-        <number>0</number>
+        <number>5</number>
        </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>10</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>10</number>
        </property>
        <property name="bottomMargin">
-        <number>0</number>
+        <number>5</number>
        </property>
        <item>
         <spacer name="verticalSpacer">
+         <property name="font">
+          <font>
+           <family>Ubuntu</family>
+          </font>
+         </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -1418,7 +1429,7 @@ QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}</string>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="bAbout">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
            <horstretch>0</horstretch>
@@ -1428,11 +1439,24 @@ QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}</string>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
          </property>
+         <property name="toolTip">
+          <string>About</string>
+         </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
-          <string>About</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/img/img/about.png</normaloff>:/img/img/about.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
          <property name="flat">
           <bool>false</bool>
@@ -1440,7 +1464,7 @@ QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="bExit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
            <horstretch>0</horstretch>
@@ -1450,11 +1474,27 @@ QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}</string>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
          </property>
+         <property name="toolTip">
+          <string>Quit the Application</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
-          <string>Exit</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/img/img/quit.png</normaloff>:/img/img/quit.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
          <property name="flat">
           <bool>false</bool>
@@ -1481,23 +1521,6 @@ QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}</string>
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>760</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="actionAbout"/>
-   </widget>
-   <addaction name="menuHelp"/>
   </widget>
   <action name="actionAbout">
    <property name="text">
@@ -1550,6 +1573,8 @@ QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}</string>
   <tabstop>bEuler</tabstop>
   <tabstop>bPi</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -50,6 +50,8 @@ private slots:
 
     void openAbout();
 
+    void quitButton();
+
 private:
     Ui::MainWindow *ui;
     void clearFlags();
@@ -61,10 +63,10 @@ private:
     double memory = 0.;
 
     enum class eventFlag{
-        Num, binOp, lParen, rParen, eqPressed
+        None, Num, binOp, lParen, rParen, eqPressed, clearAll, Mem
     };
 
-    eventFlag event;
+    eventFlag event = eventFlag::None;
 
 
 };
