@@ -53,18 +53,18 @@ private slots:
 private:
     Ui::MainWindow *ui;
     void clearFlags();
-    bool resetInput = false;
-    bool resetResult = false;
-    bool binOp = false;
     int lParenCount = 0;
-    bool lParen = false;
-    bool rParen = false;
-    bool eqPressed = false;
+
 
     CDMath math;
 
     double memory = 0.;
 
+    enum class eventFlag{
+        Num, binOp, lParen, rParen, eqPressed
+    };
+
+    eventFlag event;
 
 
 };

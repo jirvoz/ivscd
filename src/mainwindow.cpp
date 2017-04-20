@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QKeyEvent>
 
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -79,19 +81,16 @@ void MainWindow::addNum(){
     QString num = qobject_cast<QPushButton*>(sender())->text();
     QString str = ui->resultLabel->text();
 
-    if(resetInput){
+    clearFlags();
 
-        ui->inputLabel->setText(QString(""));
-
-        resetInput = false;
-    }
+    /*
     if(str == QString("-")){
         str += " ";
     }
+    */
 
-    if(str == QString("0") || resetResult){
+    if(str == QString("0")){
         str = num;
-        resetResult = false;
     }
     else{
         str += num;
@@ -99,34 +98,24 @@ void MainWindow::addNum(){
 
     ui->resultLabel->setText(str);
 
-    binOp = false;
-    eqPressed = false;
+    event = eventFlag::Num;
 
 }
 
 void MainWindow::addBinOp(){
 
-    if(resetInput){
-
-        ui->inputLabel->setText(QString(""));
-
-        resetInput = false;
-    }
-
+    clearFlags();
 
     QString str = ui->inputLabel->text();
 
-
-
-    if(binOp){
+    if(event = eventFlag::binOp){
         str = str.left(str.length() - 2) + qobject_cast<QPushButton*>(sender())->text() + " ";
     }
-    else if(rParen){
+    else if(event = eventFlag::rParen){
         str += " " + qobject_cast<QPushButton*>(sender())->text() + " ";
     }
     else{
-
-        if(ui->resultLabel->text().left(1) == QString("-") && ui->inputLabel->text().length() > 0 && lParen == false ){
+        if(ui->resultLabel->text().left(1) == QString("-") && ui->inputLabel->text().length() > 0 && event != eventFlag::lParen ){
             str += "( " + ui->resultLabel->text() + " ) " + qobject_cast<QPushButton*>(sender())->text() + " ";
         }
         else{
@@ -413,6 +402,8 @@ void MainWindow::addLparen(){
 
 void MainWindow::addRparen(){
 
+    clearFlags();
+
     QString str = ui->inputLabel->text();
 
     if(lParen){
@@ -432,6 +423,7 @@ void MainWindow::addRparen(){
     binOp = false;
     lParen = false;
     rParen = true;
+    eqPressed = false;
 
     if(lParenCount == 0){
         ui->bParenR->setEnabled(false);
@@ -439,26 +431,40 @@ void MainWindow::addRparen(){
 }
 
 void MainWindow::reciproc(){
+
+    clearFlags();
+
     QString str = ui->resultLabel->text();
     ui->resultLabel->setText("1");
     QMetaObject::invokeMethod(ui->bDiv, "clicked");
     ui->resultLabel->setText(str);
+
+    resetInput = false;
+    resetResult = false;
+    binOp = false;
+    lParen = false;
+    rParen = false;
+    eqPressed = false;
+
 }
 
 void MainWindow::openAbout(){
 
     QMessageBox msgBox;
-    msgBox.setText("Simple Calculator app created for IVS 2017.\nCreated by team Core Dumped:\n       Dominika Labudová\n       Jozef Méry\n       Vlastimil Rádsetoulal\n       Jiří Vozár");
+    msgBox.setText("Simple Calculator app created for IVS 2017.\nCreated by team Core Dumped:\n\n       Dominika Labudová\n       Jozef Méry\n       Vlastimil Rádsetoulal\n       Jiří Vozár");
     msgBox.setWindowTitle("About");
     msgBox.exec();
 
 }
 
 void MainWindow::clearFlags(){
+
     if(resetInput){
         ui->inputLabel->setText("");
     }
 
-
+    if(resetResult){
+        ui->resultLabel->setText("");
+    }
 
 }
