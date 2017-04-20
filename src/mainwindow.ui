@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>764</width>
-    <height>472</height>
+    <height>532</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -55,7 +55,7 @@ font-family: Ubuntu;</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,3,1" columnstretch="0,0,0">
+      <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,0,0" columnstretch="0,0,0">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -71,6 +71,81 @@ font-family: Ubuntu;</string>
        <property name="spacing">
         <number>0</number>
        </property>
+       <item row="2" column="1">
+        <widget class="QLabel" name="memLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Ubuntu</family>
+           <pointsize>15</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="infoLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Ubuntu</family>
+           <pointsize>15</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(138, 150, 255);</string>
+         </property>
+         <property name="text">
+          <string>M</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QLabel" name="resultLabel">
+         <property name="font">
+          <font>
+           <family>Ubuntu</family>
+           <pointsize>40</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="indent">
+          <number>2</number>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0" colspan="3">
         <widget class="QFrame" name="frame">
          <property name="frameShape">
@@ -97,20 +172,16 @@ font-family: Ubuntu;</string>
           </property>
           <item>
            <widget class="QLabel" name="longinputLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
             <property name="font">
              <font>
-              <family>Ubuntu</family>
               <pointsize>20</pointsize>
              </font>
             </property>
             <property name="text">
              <string>«</string>
+            </property>
+            <property name="margin">
+             <number>5</number>
             </property>
            </widget>
           </item>
@@ -125,6 +196,7 @@ font-family: Ubuntu;</string>
             <property name="font">
              <font>
               <family>Ubuntu</family>
+              <pointsize>20</pointsize>
              </font>
             </property>
             <property name="text">
@@ -139,85 +211,6 @@ font-family: Ubuntu;</string>
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="3">
-        <widget class="QLabel" name="resultLabel">
-         <property name="font">
-          <font>
-           <family>Ubuntu</family>
-           <pointsize>30</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="indent">
-          <number>2</number>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="memLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <family>Ubuntu</family>
-           <pointsize>20</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="parenLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <family>Ubuntu</family>
-           <pointsize>20</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QLabel" name="infoLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <family>Ubuntu</family>
-           <pointsize>20</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
         </widget>
        </item>
       </layout>
@@ -1275,7 +1268,17 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
           <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
-          <string>&lt;-</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/img/img/backspace.png</normaloff>:/img/img/backspace.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>

@@ -31,13 +31,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     }
 
+    QPushButton* funcList[] = {ui->bLog, ui->bLn, ui->bSin, ui->bCos, ui->bTan, ui->bSqrt };
+
+    for(auto i:funcList){
+
+        connect(i, SIGNAL(clicked()), this, SLOT(addFunction()));
+
+    }
+
     connect(ui->bEquals, SIGNAL(clicked()), this, SLOT(equalsPressed()));
 
     connect(ui->bDot, SIGNAL(clicked()), this, SLOT(addDot()));
 
     connect(ui->bSign, SIGNAL(clicked()), this, SLOT(toggleSign()));
 
-    connect(ui->bBack, SIGNAL(clicked()), this, SLOT(backSpace()));
+    connect(ui->bBack, SIGNAL(clicked()), this, SLOT(inputDelete()));
 
     connect(ui->bClear, SIGNAL(clicked()), this, SLOT(clear()));
 
@@ -68,7 +76,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->bExit, SIGNAL(clicked()), this, SLOT(quitButton()));
 
     ui->longinputLabel->hide();
-
 
 }
 
@@ -103,8 +110,9 @@ void MainWindow::addNum(){
 
 void MainWindow::addBinOp(){
 
-    clearFlags();
-
+    if(event != eventFlag::binOp){
+        clearFlags();
+    }
     QString str = ui->inputLabel->text();
 
     if(event == eventFlag::binOp){
@@ -118,7 +126,7 @@ void MainWindow::addBinOp(){
             str += "( " + ui->resultLabel->text() + " ) " + qobject_cast<QPushButton*>(sender())->text() + " ";
         }
         else{
-            if(event == eventFlag::lParen){
+            if(str.right(1) == "("){
                 str += QString(" ");
             }
 
@@ -142,7 +150,15 @@ void MainWindow::equalsPressed(){
              str = ui->inputLabel->text();
         }
         else{
-             str = ui->inputLabel->text() + ui->resultLabel->text();
+             str = ui->inputLabel->text();
+             if(str.right(1) == "("){
+                 str += QString(" ");
+             }
+             QString tmp = ui->resultLabel->text();
+             if(tmp.left(1) == "-"){
+                 tmp = "( " + tmp + " )";
+             }
+             str += tmp;
         }
         if(lParenCount > 0){
             if(event != eventFlag::rParen){
@@ -181,23 +197,23 @@ void MainWindow::addDot(){
 
 void MainWindow::toggleSign(){
 
+    if(event != eventFlag::eqPressed){
+        QString str = ui->resultLabel->text();
+        if(str != "0" && str != "0."){
 
-    QString str = ui->resultLabel->text();
-    if(str != "0" && str != "0."){
+            clearFlags();
 
-        clearFlags();
+            if(str.left(1) == QString("-")){
+                str = str.right(str.length() - 2);
 
-        if(str.left(1) == QString("-")){
-            str = str.right(str.length() - 2);
+            }
+            else{
+                str = "- " + str;
+            }
 
+            ui->resultLabel->setText(str);
+            event = eventFlag::Num;
         }
-        else{
-            str = "- " + str;
-        }
-
-        ui->resultLabel->setText(str);
-        event = eventFlag::Num;
-
     }
 }
 
@@ -339,6 +355,7 @@ void MainWindow::memorySet(){
     clearFlags();
     memory = ui->resultLabel->text().toDouble();
     event = eventFlag::Mem;
+    ui->memLabel->setText(QString::number(memory, 'f', 1));
 }
 
 void MainWindow::memoryClear(){
@@ -358,21 +375,22 @@ void MainWindow::memoryAdd(){
 
     clearFlags();
     memory += ui->resultLabel->text().toDouble();
-    event = eventFlag::Mem;
+    ui->memLabel->setText(QString::number(memory, 'f', 1));
 }
 
 void MainWindow::memorySub(){
 
     clearFlags();
     memory -= ui->resultLabel->text().toDouble();
-    event = eventFlag::Mem;
+    ui->memLabel->setText(QString::number(memory, 'f', 1));
+
 }
 
 void MainWindow::addLparen(){
 
-    ui->bParenR->setEnabled(true);
-
     clearFlags();
+
+    ui->bParenR->setEnabled(true);
 
     if(event == eventFlag::rParen){
         ui->inputLabel->setText(ui->inputLabel->text() + " * ");
@@ -413,7 +431,14 @@ void MainWindow::reciproc(){
 
     clearFlags();
 
+    if(event == eventFlag::rParen){
+        ui->inputLabel->setText(ui->inputLabel->text() + " * ");
+    }
+
     QString str = ui->resultLabel->text();
+    if(str.right(1) == "("){
+        str += QString(" ");
+    }
     ui->resultLabel->setText("1");
     QMetaObject::invokeMethod(ui->bDiv, "clicked");
     QMetaObject::invokeMethod(ui->bParenL, "clicked");
@@ -436,7 +461,7 @@ void MainWindow::clearFlags(){
         ui->inputLabel->setText("");
     }
 
-    if(event == eventFlag::clearAll || event == eventFlag::binOp || event == eventFlag::eqPressed || event == eventFlag::Mem
+    if(event == eventFlag::clearAll || event == eventFlag::binOp || event == eventFlag::Mem
                                     || event == eventFlag::rParen){
 
         ui->resultLabel->setText("0");
@@ -451,4 +476,38 @@ void MainWindow::clearFlags(){
 
 void MainWindow::quitButton(){
     QApplication::quit();
+}
+
+void MainWindow::addFunction(){
+
+    clearFlags();
+
+    if(event == eventFlag::rParen){
+        ui->inputLabel->setText(ui->inputLabel->text() + " * ");
+    }
+
+    QString str = ui->inputLabel->text();
+
+    if(str.right(1) == "("){
+        str += QString(" ");
+    }
+    QString tmp;
+
+    if(sender() == ui->bSqrt){
+        tmp = "sqrt";
+    }
+    else{
+        tmp = qobject_cast<QPushButton*>(sender())->text();
+    }
+    str += tmp;
+
+    ui->inputLabel->setText(str);
+    event = eventFlag::None;
+    QMetaObject::invokeMethod(ui->bParenL, "clicked");
+
+}
+
+void MainWindow::inputDelete(){
+
+
 }

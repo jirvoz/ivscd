@@ -2,5 +2,6 @@
     <qresource prefix="/img">
         <file>img/quit.png</file>
         <file>img/about.png</file>
+        <file>img/backspace.png</file>
     </qresource>
 </RCC>

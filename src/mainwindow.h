@@ -52,6 +52,10 @@ private slots:
 
     void quitButton();
 
+    void addFunction();
+
+    void inputDelete();
+
 private:
     Ui::MainWindow *ui;
     void clearFlags();
