@@ -49,8 +49,15 @@ private:
                           SUBTRACT, ///< minus
                           MULTIPLY, ///< times
                           DIVIDE, ///< division
+                          MOD, ///< modulo
                           POWER, ///< exponentiation
+                          SQRT, ///< square root
                           ABS, ///< absolute value
+                          SIN, ///< sine
+                          COS, ///< cosine
+                          TAN, ///< tangent
+                          LN, ///< natural logarithm
+                          LOG, ///< common (10) logarithm
                           OPERATORS_COUNT /**<
                                 * last value for OpProperties array
                                 *  allocation */

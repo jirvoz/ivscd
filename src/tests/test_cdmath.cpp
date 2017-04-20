@@ -1,5 +1,6 @@
 #include <QtTest>
 #include <QString>
+#include <cmath>
 
 #include "cdmath.h"
 
@@ -17,6 +18,7 @@ private Q_SLOTS:
     void testPower();
     void testUnaryMinus();
     void testAbs();
+    void testCmathFunctions();
 };
 
 CDMathTests::CDMathTests()
@@ -29,6 +31,8 @@ void CDMathTests::testEvaluate()
     QCOMPARE(cdMath.evaluate(QString("3 + 4")), 7.0);
     QCOMPARE(cdMath.evaluate(QString("3 + 4 * 2")), 11.0);
     QCOMPARE(cdMath.evaluate(QString("3 - 5 / 2")), 0.5);
+    QCOMPARE(cdMath.evaluate(QString(" 5 / 2 - 3")), -0.5);
+    QCOMPARE(cdMath.evaluate(QString("5 % 2 - 3")), -2.0);
     QCOMPARE(cdMath.evaluate(QString("(3 - 7.25) * 2")), -8.5);
     QCOMPARE(cdMath.evaluate(QString("(3 -( 7.5 + 8) / 2) * 5")), -23.75);
     QCOMPARE(cdMath.evaluate(QString("3^2^3")), cdMath.power(3, cdMath.power(2, 3)));
@@ -70,6 +74,16 @@ void CDMathTests::testAbs()
     QCOMPARE(cdMath.evaluate(QString("abs(0-4)")), 4.0);
     QCOMPARE(cdMath.evaluate(QString("2 + abs(1-4) - 3")), 2.0);
     QCOMPARE(cdMath.evaluate(QString("2 + abs(1-4) * 3")), 11.0);
+}
+
+void CDMathTests::testCmathFunctions()
+{
+    QCOMPARE(cdMath.evaluate(QString("sin(5)")), sin(5));
+    QCOMPARE(cdMath.evaluate(QString("cos(5)")), cos(5));
+    QCOMPARE(cdMath.evaluate(QString("tan(5)")), tan(5));
+    QCOMPARE(cdMath.evaluate(QString("tg(5)")), tan(5));
+    QCOMPARE(cdMath.evaluate(QString("ln(5)")), log(5));
+    QCOMPARE(cdMath.evaluate(QString("log(5)")), log10(5));
 }
 
 QTEST_APPLESS_MAIN(CDMathTests)
