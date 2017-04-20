@@ -4,6 +4,7 @@
 #include <QString>
 #include <QMap>
 #include <QStack>
+#include <QException>
 
 /**
  * @brief Pack of methods for evaluating mathematical expressions.
@@ -168,5 +169,7 @@ private:
      */
     static double fabs(double n);
 };
+
+class SyntaxException : public QException {};
 
 #endif // CDMATH_H

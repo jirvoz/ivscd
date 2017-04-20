@@ -57,66 +57,94 @@ void CDMath::pushOperator(Operator op)
 
 void CDMath::commitTopOperator()
 {
+    if (operatorStack.isEmpty())
+        throw SyntaxException();
     Operator op = operatorStack.pop();
     double a, b;
 
     switch (op) {
     case Operator::ADD:
+        if (numberStack.size() < 2)
+            throw SyntaxException();
         b = numberStack.pop();
         a = numberStack.pop();
         numberStack.push(a + b);
         break;
     case Operator::SUBTRACT:
+        if (numberStack.size() < 2)
+            throw SyntaxException();
         b = numberStack.pop();
         a = numberStack.pop();
         numberStack.push(a - b);
         break;
     case Operator::MULTIPLY:
+        if (numberStack.size() < 2)
+            throw SyntaxException();
         b = numberStack.pop();
         a = numberStack.pop();
         numberStack.push(a * b);
         break;
     case Operator::DIVIDE:
+        if (numberStack.size() < 2)
+            throw SyntaxException();
         b = numberStack.pop();
         a = numberStack.pop();
         numberStack.push(a / b);
         break;
     case Operator::MOD:
+        if (numberStack.size() < 2)
+            throw SyntaxException();
         b = numberStack.pop();
         a = numberStack.pop();
         //because of doubles
         numberStack.push(a - b * floor(a / b));
         break;
     case Operator::POWER:
+        if (numberStack.size() < 2)
+            throw SyntaxException();
         b = numberStack.pop();
         a = numberStack.pop();
         numberStack.push(power(a, b));
         break;
     case Operator::SQRT:
+        if (numberStack.size() < 1)
+            throw SyntaxException();
         a = numberStack.pop();
         numberStack.push(power(a, 0.5));
         break;
     case Operator::ABS:
+        if (numberStack.size() < 1)
+            throw SyntaxException();
         a = numberStack.pop();
         numberStack.push(a < 0 ? -a : a);
         break;
     case Operator::SIN:
+        if (numberStack.size() < 1)
+            throw SyntaxException();
         a = numberStack.pop();
         numberStack.push(sin(a));
         break;
     case Operator::COS:
+        if (numberStack.size() < 1)
+            throw SyntaxException();
         a = numberStack.pop();
         numberStack.push(cos(a));
         break;
     case Operator::TAN:
+        if (numberStack.size() < 1)
+            throw SyntaxException();
         a = numberStack.pop();
         numberStack.push(tan(a));
         break;
     case Operator::LN:
+        if (numberStack.size() < 1)
+            throw SyntaxException();
         a = numberStack.pop();
         numberStack.push(log(a));
         break;
     case Operator::LOG:
+        if (numberStack.size() < 1)
+            throw SyntaxException();
         a = numberStack.pop();
         numberStack.push(log10(a));
         break;
@@ -223,7 +251,10 @@ double CDMath::evaluate(QString expression)
         }
         else if (digitsRead)
         {
-            numberStack.push(expression.midRef(i - digitsRead, digitsRead).toDouble());
+            bool ok;
+            numberStack.push(expression.midRef(i - digitsRead, digitsRead).toDouble(&ok));
+            if (!ok)
+                throw SyntaxException();
             digitsRead = 0;
             lastWasNumber = true;
         }
@@ -290,5 +321,7 @@ double CDMath::evaluate(QString expression)
         commitTopOperator();
     }
 
+    if (numberStack.size() != 1)
+        throw SyntaxException();
     return numberStack.pop();
 }
