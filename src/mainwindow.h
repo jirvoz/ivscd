@@ -2,8 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QString>
+#include <QPushButton>
+#include <cdmath.h>
+#include <math.h>
+#include <QMessageBox>
 
-#include "cdmath.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,28 +22,50 @@ public:
     ~MainWindow();
 
 private slots:
+    void addNum();
+    void addBinOp();
+    void equalsPressed();
+    void addDot();
+    void toggleSign();
 
-    void on_B_0_clicked();
-    void on_B_1_clicked();
-    void on_B_2_clicked();
-    void on_B_3_clicked();
-    void on_B_4_clicked();
-    void on_B_5_clicked();
-    void on_B_6_clicked();
-    void on_B_7_clicked();
-    void on_B_8_clicked();
-    void on_B_9_clicked();
-    void on_B_plus_clicked();
-    void on_B_minus_clicked();
-    void on_B_times_clicked();
-    void on_B_div_clicked();
-    void on_B_rightBrace_clicked();
-    void on_B_leftBrace_clicked();
-    void on_B_equals_clicked();
+    void backSpace();
+    void clear();
+    void clearAll();
+
+    void setPi();
+    void setEuler();
+
+    void keyPressEvent(QKeyEvent *event );
+
+    void memorySet();
+    void memoryClear();
+    void memoryRead();
+    void memoryAdd();
+    void memorySub();
+
+    void addLparen();
+    void addRparen();
+
+    void reciproc();
+
+    void openAbout();
 
 private:
     Ui::MainWindow *ui;
-    CDMath cdMath;
+    void clearFlags();
+    bool resetInput = false;
+    bool resetResult = false;
+    bool binOp = false;
+    int lParenCount = 0;
+    bool lParen = false;
+    bool rParen = false;
+    bool eqPressed = false;
+
+    CDMath math;
+
+    double memory = 0.;
+
+
 
 };
 
