@@ -40,6 +40,14 @@ public:
      */
     double evaluate(QString expression);
 
+    /**
+     * @brief Returns the standard deviation of double values passed as sec. arg.
+     * @param paramCount number of double values entered
+     * @param items array of double values to compute with
+     * @return standard deviation of items
+     */
+    double standardDeviation(int paramCount, double *items);
+
 private:
     /**
      * @brief Operator enum for operator stack and properties.
