@@ -1,3 +1,4 @@
+=======
 
 # IVSCD CALCULATOR
  README for school project of subject "Practical aspects of software design"
@@ -39,4 +40,4 @@ $ make
 
 
 
-
+>>>>>>> 3a80386bfc89c54326a8cfd2d3d1791eb0a71b24:README_EN.md
