@@ -32,6 +32,11 @@
 *.user
 *.autosave
 build*
+moc_*
+ui_*
 
 doc*
 Makefile
+ivscd
+*.deb
+*.zip

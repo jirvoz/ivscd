@@ -22,24 +22,32 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
+#pack whole project
+pack.CONFIG = phony
+pack.depends = repo_pack doc deb
+pack.commands = mkdir install && \
+                cp ivscd_1.0-1.deb install && \
+                zip -r xvozar04.zip doc install repo && \
+                rm -rvf install repo
+repo_pack.CONFIG = phony
+repo_pack.depends = clean
+repo_pack.commands = mkdir repo && rsync -av --exclude='repo' --exclude='*.user' .. repo
+
 #clean
-extra_clean.target = extra_clean
+clean.depends = extra_clean
 extra_clean.CONFIG = phony
-extra_clean.commands += rm -rvf *.o moc_* ui_* build* ivscd tests/*.o tests/*.moc tests/test_cdmath doc ivscd_1.0-1.deb
-clean.depends += extra_clean
+extra_clean.commands = rm -rvf *.o moc_* ui_* build* ivscd tests/*.o tests/*.moc tests/test_cdmath \
+                       doc ivscd_1.0-1.deb ivscd_1.0-1/usr repo xvozar04.zip
 
 #test
-test.target = test
 test.depends = tests/tests.pro tests/test_cdmath.cpp
 test.commands = cd tests && qmake && make && ./test_cdmath
 
 #doc
-doc.target = doc
 doc.depends = Doxyfile cdmath.h mainwindow.h cdmath.cpp mainwindow.cpp
 doc.commands = doxygen
 
 #run
-run.target = run
 run.CONFIG = phony
 run.depends = ivscd
 run.commands = ./ivscd
@@ -49,11 +57,10 @@ ivsdeb.target = ivscd_1.0-1.deb
 ivsdeb.depends = ivscd
 ivsdeb.commands = mkdir -p ivscd_1.0-1/usr/local/bin && cp ivscd ivscd_1.0-1/usr/local/bin && dpkg-deb --build ivscd_1.0-1
 #alias for deb package ivscd_1.0-1.deb
-deb.target = deb
 deb.CONFIG = phony
 deb.depends = ivscd_1.0-1.deb
 
-QMAKE_EXTRA_TARGETS += clean extra_clean test doc run ivsdeb deb
+QMAKE_EXTRA_TARGETS += pack repo_pack clean extra_clean test doc run ivsdeb deb
 
 #install
 target.path = /usr/local/bin/
