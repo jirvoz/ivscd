@@ -151,7 +151,20 @@ double CDMath::fabs(double n)
 double CDMath::squareRoot(double a, double b)
 {
    double y = 1/b;
-  return power(a, y);
+   return power(a, y);
+}
+
+double CDMath::mean(int paramCount, double *items)
+{
+
+    double mean = 0;
+
+    for(int i = 0; i < paramCount; i++)
+    {
+        mean += items[i];
+    }
+
+    return mean/paramCount;
 }
 
 double CDMath::evaluate(QString expression)
@@ -247,19 +260,13 @@ double CDMath::evaluate(QString expression)
 double CDMath::standardDeviation(int paramCount, double *items)
 {
     double sum = 0;
+
     for(int i = 0; i < paramCount; i++)
     {
         sum += CDMath::power(items[i], 2);
     }
 
-    double mean = 0;
-
-    for(int i = 0; i < paramCount; i++)
-    {
-        mean += items[i];
-    }
-
-    mean = mean/paramCount;
+    double mean = CDMath::mean(paramCount, items);
 
     double subRes = sum - (paramCount * CDMath::power(mean, 2));
 

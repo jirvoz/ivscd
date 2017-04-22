@@ -22,12 +22,21 @@ public:
     static double power(double x, double y);
 
     /**
-     * @brief Returns the square root of number
+     * @brief computes the square root of number
      * @param a base
      * @param b square root
      * @return a^(1/b)
      */
     static double squareRoot(double a, double b);
+
+
+    /**
+     * @brief computes mean of the items file
+     * @param paramCount the number of items in file
+     * @param items file of the values to compute with
+     * @return mean
+     */
+    static double mean(int paramCount, double *items);
 
     /**
      * @brief Evaluates and calculates expression passed in QString
