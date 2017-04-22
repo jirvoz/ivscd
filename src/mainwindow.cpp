@@ -6,7 +6,6 @@
 #include <QKeyEvent>
 
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -14,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);  
 
 
-
+    // helper lists for initializations
+    //numbers
     QPushButton* numLst[] = {ui->b0, ui->b1, ui->b2, ui->b3, ui->b4, ui->b5, ui->b6, ui->b7, ui->b8, ui->b9 };
 
     for(auto i:numLst){
@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(i, SIGNAL(clicked()), this, SLOT(addNum()));
 
     }
-
+    // binary operators
     QPushButton* binOpLst[] = {ui->bAdd, ui->bDiv, ui->bPower, ui->bSub, ui->bTimes, ui->bMod };
 
     for(auto i:binOpLst){
@@ -30,14 +30,15 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(i, SIGNAL(clicked()), this, SLOT(addBinOp()));
 
     }
-
-    QPushButton* funcList[] = {ui->bLog, ui->bLn, ui->bSin, ui->bCos, ui->bTan, ui->bSqrt };
+    // functions
+    QPushButton* funcList[] = {ui->bLog, ui->bLn, ui->bSin, ui->bCos, ui->bTan, ui->bSqrt, ui->bAbs };
 
     for(auto i:funcList){
 
         connect(i, SIGNAL(clicked()), this, SLOT(addFunction()));
 
     }
+    // manual event handler initializations
 
     connect(ui->bEquals, SIGNAL(clicked()), this, SLOT(equalsPressed()));
 
@@ -45,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->bSign, SIGNAL(clicked()), this, SLOT(toggleSign()));
 
-    connect(ui->bBack, SIGNAL(clicked()), this, SLOT(inputDelete()));
+    connect(ui->bBack, SIGNAL(clicked()), this, SLOT(backSpace()));
 
     connect(ui->bClear, SIGNAL(clicked()), this, SLOT(clear()));
 
@@ -75,8 +76,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->bExit, SIGNAL(clicked()), this, SLOT(quitButton()));
 
-    ui->longinputLabel->hide();
-
 }
 
 MainWindow::~MainWindow()
@@ -89,16 +88,20 @@ void MainWindow::addNum(){
 
     clearFlags();
 
+    // get the caller's number
     QString num = qobject_cast<QPushButton*>(sender())->text();
     QString str = ui->resultLabel->text();
 
+    // replace 0 with number
     if(str == QString("0")){
         str = num;
     }
     else{
+        // add a space to the number if, it is negative and there is no other number
         if(str == "-"){
             str += " ";
         }
+        // append the caller's number
         str += num;
     }
 
@@ -110,26 +113,31 @@ void MainWindow::addNum(){
 
 void MainWindow::addBinOp(){
 
+    // clear stuff only once
     if(event != eventFlag::binOp){
         clearFlags();
     }
     QString str = ui->inputLabel->text();
 
+    // change operator, if the last event was binary operator
     if(event == eventFlag::binOp){
         str = str.left(str.length() - 2) + qobject_cast<QPushButton*>(sender())->text() + " ";
     }
+    // only add the operator if the last action was )
     else if(event == eventFlag::rParen){
         str += " " + qobject_cast<QPushButton*>(sender())->text() + " ";
     }
     else{
+        // add parenthesis to negative numbers if neccessary
         if(ui->resultLabel->text().left(1) == QString("-") && ui->inputLabel->text().length() > 0 && event != eventFlag::lParen ){
             str += "( " + ui->resultLabel->text() + " ) " + qobject_cast<QPushButton*>(sender())->text() + " ";
         }
         else{
+            // add space if neccessary
             if(str.right(1) == "("){
                 str += QString(" ");
             }
-
+            // add operator
             str += ui->resultLabel->text() + " " + qobject_cast<QPushButton*>(sender())->text() + " ";
         }
     }
@@ -141,11 +149,12 @@ void MainWindow::addBinOp(){
 }
 
 void MainWindow::equalsPressed(){
-    if(event != eventFlag::eqPressed){
+    if(event != eventFlag::eqPressed && ui->inputLabel->text().length() > 0){
 
         clearFlags();
 
         QString str;
+        // omit result label
         if(event == eventFlag::rParen){
              str = ui->inputLabel->text();
         }
@@ -155,7 +164,7 @@ void MainWindow::equalsPressed(){
                  str += QString(" ");
              }
              QString tmp = ui->resultLabel->text();
-             if(tmp.left(1) == "-"){
+             if(tmp.left(1) == "-" && event != eventFlag::lParen){
                  tmp = "( " + tmp + " )";
              }
              str += tmp;
@@ -172,12 +181,13 @@ void MainWindow::equalsPressed(){
         ui->inputLabel->setText(str);
 
         ui->resultLabel->setText(QString::number(math.evaluate(str)));
-    }
 
-    event = eventFlag::eqPressed;
+        event = eventFlag::eqPressed;
+    }
 }
 
 void MainWindow::addDot(){
+    // disable dot adding after calculation
     if(event != eventFlag::eqPressed){
 
         clearFlags();
@@ -199,6 +209,7 @@ void MainWindow::toggleSign(){
 
     if(event != eventFlag::eqPressed){
         QString str = ui->resultLabel->text();
+        // zero can't be negative
         if(str != "0" && str != "0."){
 
             clearFlags();
@@ -219,20 +230,23 @@ void MainWindow::toggleSign(){
 
 void MainWindow::backSpace(){
 
-    clearFlags();
+    if(event != eventFlag::eqPressed){
 
-    QString str = ui->resultLabel->text();
-    do{
-        str.chop(1);
+        clearFlags();
+
+        QString str = ui->resultLabel->text();
+        do{
+            str.chop(1);
+            }
+        while(str.right(1) == " ");
+
+        event = eventFlag::Num;
+
+        if(str.length() == 0){
+            str = "0";
         }
-    while(str.right(1) == " ");
-
-    if(str.length() == 0){
-        str = "0";
+        ui->resultLabel->setText(str);
     }
-    ui->resultLabel->setText(str);
-
-    event = eventFlag::Num;
 }
 
 void MainWindow::clear(){
@@ -251,7 +265,7 @@ void MainWindow::clearAll(){
 
 void MainWindow::keyPressEvent(QKeyEvent *event ){
 
-    if(event->key() == Qt::Key_Return){
+    if(event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){
         ui->bEquals->animateClick();
     }
 
@@ -323,7 +337,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event ){
         ui->bParenL->animateClick();
     }
     if(event->key() == Qt::Key_Exclam ){
-        ui->bFactorial->animateClick();
+        ui->bAbs->animateClick();
     }
     if(event->key() == Qt::Key_S){
         ui->bSign->animateClick();
@@ -352,16 +366,18 @@ void MainWindow::setEuler(){
 }
 
 void MainWindow::memorySet(){
-    clearFlags();
+    if(event != eventFlag::setMem){
+        clearFlags();
+    }
     memory = ui->resultLabel->text().toDouble();
-    event = eventFlag::Mem;
+    event = eventFlag::setMem;
     ui->memLabel->setText(QString::number(memory, 'f', 1));
 }
 
 void MainWindow::memoryClear(){
 
     memory = 0;
-
+    ui->memLabel->setText("0");
 }
 
 void MainWindow::memoryRead(){
@@ -397,7 +413,6 @@ void MainWindow::addLparen(){
     }
     ui->inputLabel->setText(ui->inputLabel->text() + "(");
 
-    ui->resultLabel->setText(QString("0"));
     lParenCount++;
     event = eventFlag::lParen;
 }
@@ -462,13 +477,12 @@ void MainWindow::clearFlags(){
     }
 
     if(event == eventFlag::clearAll || event == eventFlag::binOp || event == eventFlag::Mem
-                                    || event == eventFlag::rParen){
+                                    || event == eventFlag::rParen || event == eventFlag::setMem){
 
         ui->resultLabel->setText("0");
     }
 
     if(event == eventFlag::clearAll){
-        memory = 0;
         lParenCount = 0;
         ui->bParenR->setEnabled(false);
     }
@@ -504,10 +518,5 @@ void MainWindow::addFunction(){
     ui->inputLabel->setText(str);
     event = eventFlag::None;
     QMetaObject::invokeMethod(ui->bParenL, "clicked");
-
-}
-
-void MainWindow::inputDelete(){
-
 
 }

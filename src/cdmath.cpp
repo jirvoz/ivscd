@@ -196,7 +196,7 @@ double CDMath::fabs(double n)
 double CDMath::squareRoot(double a, double b)
 {
    double y = 1/b;
-   power(a, y);
+   return power(a, y);
 }
 
 double CDMath::evaluate(QString expression)
