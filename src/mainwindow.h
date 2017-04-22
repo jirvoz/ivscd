@@ -175,6 +175,12 @@ private slots:
      */
     void addFunction();
 
+    void textInput();
+
+    void basicInput();
+
+    void calcInput();
+
 private:
 
     /**

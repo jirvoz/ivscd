@@ -3,5 +3,7 @@
         <file>img/quit.png</file>
         <file>img/about.png</file>
         <file>img/backspace.png</file>
+        <file>img/text.png</file>
+        <file>img/basic.png</file>
     </qresource>
 </RCC>

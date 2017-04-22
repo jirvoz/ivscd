@@ -76,6 +76,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->bExit, SIGNAL(clicked()), this, SLOT(quitButton()));
 
+    connect(ui->bText, SIGNAL(clicked()), this, SLOT(textInput()));
+
+    connect(ui->bBasic, SIGNAL(clicked()), this, SLOT(basicInput()));
+
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()
@@ -268,13 +273,16 @@ void MainWindow::clearAll(){
 void MainWindow::keyPressEvent(QKeyEvent *event ){
 
     if(event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){
+      if(ui->stackedWidget->currentIndex() == 0){
         ui->bEquals->animateClick();
+        }
+      else if(ui->stackedWidget->currentIndex() == 1){
+          calcInput();
+      }
     }
-
     if(event->key() == Qt::Key_Backspace){
         ui->bBack->animateClick();
     }
-
     if(event->key() == Qt::Key_C){
         ui->bClear->animateClick();
     }
@@ -525,4 +533,26 @@ void MainWindow::addFunction(){
     event = eventFlag::None;
     QMetaObject::invokeMethod(ui->bParenL, "clicked");
 
+}
+
+void MainWindow::textInput(){
+    ui->bBasic->setChecked(false);
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::basicInput(){
+    ui->bText->setChecked(false);
+    ui->stackedWidget->setCurrentIndex(0);
+    QMetaObject::invokeMethod(ui->bAllClear, "clicked");
+
+}
+
+void MainWindow::calcInput(){
+    QString str = ui->lineEdit->text();
+    try{
+        ui->lineEdit->setText( QString::number(math.evaluate(str), 'g', 12) );
+    }
+    catch(CDMathException e){
+       ui->lineEdit->setText(e.what());
+    }
 }
