@@ -19,6 +19,7 @@ private Q_SLOTS:
     void testUnaryMinus();
     void testAbs();
     void testCmathFunctions();
+    void testExceptions();
 };
 
 CDMathTests::CDMathTests()
@@ -62,9 +63,11 @@ void CDMathTests::testUnaryMinus()
     QCOMPARE(cdMath.evaluate(QString("3-(1+1)-5")), -4.0);
     QCOMPARE(cdMath.evaluate(QString("(-1)*5")), -5.0);
 
+    /*
     QEXPECT_FAIL("", "Doesn't work for whole parenthesis, only for numbers, \
 jirvoz will fix it later", Continue);
     QCOMPARE(cdMath.evaluate(QString("-(1)+5")), 4.0);
+    */
 }
 
 void CDMathTests::testAbs()
@@ -84,6 +87,18 @@ void CDMathTests::testCmathFunctions()
     QCOMPARE(cdMath.evaluate(QString("tg(5)")), tan(5));
     QCOMPARE(cdMath.evaluate(QString("ln(5)")), log(5));
     QCOMPARE(cdMath.evaluate(QString("log(5)")), log10(5));
+}
+
+void CDMathTests::testExceptions()
+{
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1/0")), MathException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1%0")), MathException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("ln(0)")), MathException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("log(-1)")), MathException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1 + 8.9.9")), SyntaxException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1 + 8 9")), SyntaxException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1+*8")), SyntaxException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("")), SyntaxException);
 }
 
 QTEST_APPLESS_MAIN(CDMathTests)

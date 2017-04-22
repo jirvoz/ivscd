@@ -4,6 +4,7 @@
 #include <QString>
 #include <QMap>
 #include <QStack>
+#include <QException>
 
 /**
  * @brief Pack of methods for evaluating mathematical expressions.
@@ -167,6 +168,61 @@ private:
      * @return absolute value of a number
      */
     static double fabs(double n);
+};
+
+/**
+ * @brief Generic Exception for CDMath library.
+ *
+ * CDMathException is generic exception to be inherited
+ * by other specific exceptions in CDMath.
+ */
+class CDMathException : public QException
+{
+protected:
+    QString message; ///< message to be retuned in e.what()
+public:
+    /**
+     * @brief Returns message with exception description.
+     * @return exception message as const char*
+     */
+    virtual const char* what() const throw()
+    {
+        return message.toLocal8Bit().constData();
+    }
+};
+
+/**
+ * @brief Exception for bad mathematical operations like division by zero.
+ */
+class MathException : public CDMathException
+{
+public:
+    /**
+     * @brief Basic MathException constructor.
+     */
+    MathException() { message = "Math error."; }
+    /**
+     * @brief Constructor for MathException with custom message.
+     * @param detail message to be added to error message
+     */
+    MathException(QString detail) { message = "Math error: " + detail; }
+};
+
+/**
+ * @brief Exception for mistakes in expression for evaluate.
+ */
+class SyntaxException : public CDMathException
+{
+public:
+    /**
+     * @brief Basic SyntaxException constructor
+     */
+    SyntaxException() { message = "Syntax error."; }
+    /**
+     * @brief Constructor for SyntaxException with custom message.
+     * @param detail message to be added to error message
+     */
+    SyntaxException(QString detail) { message = "Syntax error: " + detail; }
 };
 
 #endif // CDMATH_H
