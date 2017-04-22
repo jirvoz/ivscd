@@ -91,8 +91,14 @@ void CDMathTests::testCmathFunctions()
 
 void CDMathTests::testExceptions()
 {
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1/0")), MathException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1%0")), MathException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("ln(0)")), MathException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("log(-1)")), MathException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1 + 8.9.9")), SyntaxException);
     QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1 + 8 9")), SyntaxException);
     QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1+*8")), SyntaxException);
+    QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("")), SyntaxException);
 }
 
 QTEST_APPLESS_MAIN(CDMathTests)

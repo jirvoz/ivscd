@@ -89,6 +89,8 @@ void CDMath::commitTopOperator()
             throw SyntaxException();
         b = numberStack.pop();
         a = numberStack.pop();
+        if (b == 0)
+            throw MathException("Division by zero.");
         numberStack.push(a / b);
         break;
     case Operator::MOD:
@@ -96,6 +98,8 @@ void CDMath::commitTopOperator()
             throw SyntaxException();
         b = numberStack.pop();
         a = numberStack.pop();
+        if (b == 0)
+            throw MathException("Division by zero.");
         //because of doubles
         numberStack.push(a - b * floor(a / b));
         break;
@@ -110,6 +114,8 @@ void CDMath::commitTopOperator()
         if (numberStack.size() < 1)
             throw SyntaxException();
         a = numberStack.pop();
+        if (a < 0)
+            throw MathException("Square root of negative number.");
         numberStack.push(power(a, 0.5));
         break;
     case Operator::ABS:
@@ -140,12 +146,16 @@ void CDMath::commitTopOperator()
         if (numberStack.size() < 1)
             throw SyntaxException();
         a = numberStack.pop();
+        if (a <= 0)
+            throw MathException("Logarithm of nonpositive number.");
         numberStack.push(log(a));
         break;
     case Operator::LOG:
         if (numberStack.size() < 1)
             throw SyntaxException();
         a = numberStack.pop();
+        if (a <= 0)
+            throw MathException("Logarithm of nonpositive number.");
         numberStack.push(log10(a));
         break;
     default:
@@ -254,7 +264,7 @@ double CDMath::evaluate(QString expression)
             bool ok;
             numberStack.push(expression.midRef(i - digitsRead, digitsRead).toDouble(&ok));
             if (!ok)
-                throw SyntaxException();
+                throw SyntaxException("Number reading error.");
             digitsRead = 0;
             lastWasNumber = true;
         }
@@ -267,7 +277,10 @@ double CDMath::evaluate(QString expression)
         }
         else if (lettersRead)
         {
-            pushOperator(functions.value(expression.mid(i - lettersRead, lettersRead)));
+            QMap<QString, Operator>::const_iterator iterator;
+            if ((iterator = functions.find(expression.mid(i - lettersRead, lettersRead))) == functions.end())
+                throw SyntaxException("Unknown function.");
+            pushOperator(iterator.value());
             lettersRead = 0;
             lastWasNumber = false;
         }
@@ -314,7 +327,12 @@ double CDMath::evaluate(QString expression)
     }
 
     if (digitsRead)
-        numberStack.push(expression.midRef(expLength - digitsRead, digitsRead).toDouble());
+    {
+        bool ok;
+        numberStack.push(expression.midRef(expLength - digitsRead, digitsRead).toDouble(&ok));
+        if (!ok)
+            throw SyntaxException("Number reading error.");
+    }
 
     while (!operatorStack.isEmpty())
     {

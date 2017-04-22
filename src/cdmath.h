@@ -170,6 +170,29 @@ private:
     static double fabs(double n);
 };
 
-class SyntaxException : public QException {};
+class CDMathException : public QException
+{
+protected:
+    QString message;
+public:
+    virtual const char* what() const throw()
+    {
+        return message.toLocal8Bit().constData();
+    }
+};
+
+class MathException : public CDMathException
+{
+public:
+    MathException() { message = "Math error."; }
+    MathException(QString detail) { message = "Math error: " + detail; }
+};
+
+class SyntaxException : public CDMathException
+{
+public:
+    SyntaxException() { message = "Syntax error."; }
+    SyntaxException(QString detail) { message = "Syntax error: " + detail; }
+};
 
 #endif // CDMATH_H
