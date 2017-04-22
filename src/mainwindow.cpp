@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // helper lists for initializations
-    //numbers
+    // numbers
     QPushButton* numLst[] = {ui->b0, ui->b1, ui->b2, ui->b3, ui->b4, ui->b5, ui->b6, ui->b7, ui->b8, ui->b9 };
 
     for(auto i:numLst){
@@ -124,12 +124,12 @@ void MainWindow::addBinOp(){
         str = str.left(str.length() - 2) + qobject_cast<QPushButton*>(sender())->text() + " ";
     }
     // only add the operator if the last action was )
-    else if(event == eventFlag::rParen){
+    else if(str.right(1) == ")"){
         str += " " + qobject_cast<QPushButton*>(sender())->text() + " ";
     }
     else{
         // add parenthesis to negative numbers if neccessary
-        if(ui->resultLabel->text().left(1) == QString("-") && ui->inputLabel->text().length() > 0 && event != eventFlag::lParen ){
+        if(ui->resultLabel->text().left(1) == QString("-") && ui->inputLabel->text().length() > 0 && str.right(1) != "("){
             str += "( " + ui->resultLabel->text() + " ) " + qobject_cast<QPushButton*>(sender())->text() + " ";
         }
         else{
@@ -151,8 +151,6 @@ void MainWindow::addBinOp(){
 void MainWindow::equalsPressed(){
     if(event != eventFlag::eqPressed && ui->inputLabel->text().length() > 0){
 
-        clearFlags();
-
         QString str;
         // omit result label
         if(event == eventFlag::rParen){
@@ -164,7 +162,7 @@ void MainWindow::equalsPressed(){
                  str += QString(" ");
              }
              QString tmp = ui->resultLabel->text();
-             if(tmp.left(1) == "-" && event != eventFlag::lParen){
+             if(tmp.left(1) == "-" && str.right(1) != "("){
                  tmp = "( " + tmp + " )";
              }
              str += tmp;
@@ -179,8 +177,12 @@ void MainWindow::equalsPressed(){
         }
 
         ui->inputLabel->setText(str);
-
-        ui->resultLabel->setText(QString::number(math.evaluate(str)));
+        try{
+            ui->resultLabel->setText(QString::number(math.evaluate(str)));
+        }
+        catch(CDMathException e){
+            ui->infoLabel->setText(e.what());
+        }
 
         event = eventFlag::eqPressed;
     }
@@ -476,10 +478,14 @@ void MainWindow::clearFlags(){
         ui->inputLabel->setText("");
     }
 
-    if(event == eventFlag::clearAll || event == eventFlag::binOp || event == eventFlag::Mem
+    if(event == eventFlag::clearAll || event == eventFlag::binOp || event == eventFlag::Mem || event == eventFlag::eqPressed
                                     || event == eventFlag::rParen || event == eventFlag::setMem){
 
         ui->resultLabel->setText("0");
+    }
+
+    if(event == eventFlag::clearAll || event == eventFlag::eqPressed){
+        ui->infoLabel->setText("");
     }
 
     if(event == eventFlag::clearAll){
