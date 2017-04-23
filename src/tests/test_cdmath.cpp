@@ -62,12 +62,9 @@ void CDMathTests::testUnaryMinus()
     QCOMPARE(cdMath.evaluate(QString("3 + -5")), -2.0);
     QCOMPARE(cdMath.evaluate(QString("3-(1+1)-5")), -4.0);
     QCOMPARE(cdMath.evaluate(QString("(-1)*5")), -5.0);
-
-    /*
-    QEXPECT_FAIL("", "Doesn't work for whole parenthesis, only for numbers, \
-jirvoz will fix it later", Continue);
     QCOMPARE(cdMath.evaluate(QString("-(1)+5")), 4.0);
-    */
+    QCOMPARE(cdMath.evaluate(QString("- 1 + 5")), 4.0);
+    QCOMPARE(cdMath.evaluate(QString("- (1 + 5)")), -6.0);
 }
 
 void CDMathTests::testAbs()

@@ -13,14 +13,15 @@ CDMath::CDMath()
     initOperator(Operator::MULTIPLY, 3, OpAsociativity::LEFT);
     initOperator(Operator::DIVIDE, 3, OpAsociativity::LEFT);
     initOperator(Operator::MOD, 3, OpAsociativity::LEFT);
-    initOperator(Operator::POWER, 4, OpAsociativity::RIGHT);
-    initOperator(Operator::SQRT, 5, OpAsociativity::RIGHT);
-    initOperator(Operator::ABS, 5, OpAsociativity::RIGHT);
-    initOperator(Operator::SIN, 5, OpAsociativity::RIGHT);
-    initOperator(Operator::COS, 5, OpAsociativity::RIGHT);
-    initOperator(Operator::TAN, 5, OpAsociativity::RIGHT);
-    initOperator(Operator::LN, 5, OpAsociativity::RIGHT);
-    initOperator(Operator::LOG, 5, OpAsociativity::RIGHT);
+    initOperator(Operator::UNARY_MINUS, 4, OpAsociativity::NONE);
+    initOperator(Operator::POWER, 5, OpAsociativity::RIGHT);
+    initOperator(Operator::SQRT, 6, OpAsociativity::RIGHT);
+    initOperator(Operator::ABS, 6, OpAsociativity::RIGHT);
+    initOperator(Operator::SIN, 6, OpAsociativity::RIGHT);
+    initOperator(Operator::COS, 6, OpAsociativity::RIGHT);
+    initOperator(Operator::TAN, 6, OpAsociativity::RIGHT);
+    initOperator(Operator::LN, 6, OpAsociativity::RIGHT);
+    initOperator(Operator::LOG, 6, OpAsociativity::RIGHT);
 
     //initialize functions
     functions.insert("sqrt", Operator::SQRT);
@@ -63,6 +64,12 @@ void CDMath::commitTopOperator()
     double a, b;
 
     switch (op) {
+    case Operator::UNARY_MINUS:
+        if (numberStack.size() < 1)
+            throw SyntaxException();
+        a = numberStack.pop();
+        numberStack.push(-a);
+        break;
     case Operator::ADD:
         if (numberStack.size() < 2)
             throw SyntaxException();
@@ -234,7 +241,7 @@ double CDMath::fabs(double n)
 double CDMath::squareRoot(double a, double b)
 {
    double y = 1/b;
-   power(a, y);
+   return power(a, y);
 }
 
 double CDMath::evaluate(QString expression)
@@ -250,11 +257,7 @@ double CDMath::evaluate(QString expression)
     for (int i = 0; i < expLength; i++)
     {
         //reading number
-        if (expression[i].isDigit() || expression[i] == '.'
-            //check for unary minus
-            || (expression[i] == '-' && digitsRead == 0
-                && (!lastWasNumber || (!lastWasNumber && !operatorStack.isEmpty()
-                    && operatorStack.top() == Operator::PARENTHESIS))))
+        if (expression[i].isDigit() || expression[i] == '.')
         {
             digitsRead++;
             continue;
@@ -302,7 +305,11 @@ double CDMath::evaluate(QString expression)
             lastWasNumber = false;
             break;
         case '-':
-            pushOperator(Operator::SUBTRACT);
+            if((digitsRead == 0 && (!lastWasNumber || (!lastWasNumber && !operatorStack.isEmpty()
+                && operatorStack.top() == Operator::PARENTHESIS))))
+                pushOperator(Operator::UNARY_MINUS);
+            else
+                pushOperator(Operator::SUBTRACT);
             lastWasNumber = false;
             break;
         case '*':
