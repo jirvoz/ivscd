@@ -194,6 +194,11 @@ private slots:
      */
     void calcInput();
 
+    /**
+     * @brief Editor generated function.
+     * @param arg1 Reference to string in line edit.
+     * Event handler for lineEdit.
+     */
     void on_lineEdit_textEdited(const QString &arg1);
 
     /**
@@ -253,6 +258,9 @@ private:
      */
     eventFlag event = eventFlag::None;
 
+    /**
+     * @brief Helper flag for sDeviation.
+     */
     bool sDevChecked = false;
 
 
