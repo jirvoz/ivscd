@@ -15,12 +15,10 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    cdmath.cpp \
-   sdeviation.cpp
+    cdmath.cpp
 
 HEADERS  += mainwindow.h \
-    cdmath.h \
-    sdeviation.h
+    cdmath.h
 
 FORMS    += mainwindow.ui
 
