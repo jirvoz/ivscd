@@ -176,18 +176,42 @@ private slots:
      */
     void addFunction();
 
+    /**
+     * @brief Switches to text input.
+     * Event handler for buttonpress.
+     */
     void textInput();
 
+    /**
+     * @brief Switches to basic input.
+     * Event handler for buttonpress.
+     */
     void basicInput();
 
+    /**
+     * @brief Calculates expression at lineEdit.
+     * Event handler for buttonpress.
+     */
     void calcInput();
 
     void on_lineEdit_textEdited(const QString &arg1);
 
+    /**
+     * @brief Switches to sDev input.
+     * Event handler for buttonpress.
+     */
     void sDev();
 
+    /**
+     * @brief Clears history.
+     * Event handler for buttonpress.
+     */
     void clearList();
 
+    /**
+     * @brief Adds selected text to input.
+     * Event handler for buttonpress.
+     */
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:

@@ -566,7 +566,9 @@ void MainWindow::calcInput(){
         QString str = ui->lineEdit->text();
         try{
             ui->listWidget->addItem(ui->lineEdit->text());
-            ui->listWidget->addItem(QString("= ") + QString::number(math.evaluate(str), 'g', 12));
+            QString result = QString::number(math.evaluate(str), 'g', 12);
+            ui->listWidget->addItem(QString("= ") + result);
+            ui->lineEdit->setText(result);
         }
         catch(CDMathException e){
            ui->lineEdit->setText(e.what());
