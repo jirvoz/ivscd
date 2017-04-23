@@ -5,7 +5,7 @@
  
  IVSCD Calculator can evaluate expressions with operators **+-*/^**, **brackets** and few basic **functions** like **sin**, **cos**, **tan**, and **natural and common logarithm**.
 
-## Platform
+## Platforms
 Ubuntu 64bit
 
 
