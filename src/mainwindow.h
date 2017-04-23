@@ -7,6 +7,7 @@
 #include <cdmath.h>
 #include <math.h>
 #include <QMessageBox>
+#include <QListWidget>
 
 /**
  * @brief Main class of the Application, which holds all widget methods.
@@ -180,6 +181,14 @@ private slots:
     void basicInput();
 
     void calcInput();
+
+    void on_lineEdit_textEdited(const QString &arg1);
+
+    void sDev();
+
+    void clearList();
+
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:
 

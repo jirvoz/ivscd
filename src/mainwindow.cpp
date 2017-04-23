@@ -80,6 +80,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->bBasic, SIGNAL(clicked()), this, SLOT(basicInput()));
 
+    connect(ui->bsDev, SIGNAL(clicked()), this, SLOT(sDev()));
+
+    connect(ui->clearList, SIGNAL(clicked()), this, SLOT(clearList()));
+
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -92,6 +96,11 @@ MainWindow::~MainWindow()
 void MainWindow::addNum(){
 
     clearFlags();
+
+
+    if(event == eventFlag::eqPressed){
+        ui->resultLabel->setText("0");
+    }
 
     // get the caller's number
     QString num = qobject_cast<QPushButton*>(sender())->text();
@@ -418,7 +427,7 @@ void MainWindow::addLparen(){
 
     ui->bParenR->setEnabled(true);
 
-    if(event == eventFlag::rParen){
+    if(ui->inputLabel->text().right(1) == ")"){
         ui->inputLabel->setText(ui->inputLabel->text() + " * ");
     }
     ui->inputLabel->setText(ui->inputLabel->text() + "(");
@@ -433,10 +442,10 @@ void MainWindow::addRparen(){
 
     QString str = ui->inputLabel->text();
 
-    if(event == eventFlag::lParen){
+    if(str.right(1) == "("){
         str += " ";
     }
-    if(event == eventFlag::rParen){
+    if(str.right(1) == ")"){
         str += ")";
     }
     else{
@@ -486,7 +495,7 @@ void MainWindow::clearFlags(){
         ui->inputLabel->setText("");
     }
 
-    if(event == eventFlag::clearAll || event == eventFlag::binOp || event == eventFlag::Mem || event == eventFlag::eqPressed
+    if(event == eventFlag::clearAll || event == eventFlag::binOp || event == eventFlag::Mem
                                     || event == eventFlag::rParen || event == eventFlag::setMem){
 
         ui->resultLabel->setText("0");
@@ -496,7 +505,7 @@ void MainWindow::clearFlags(){
         ui->infoLabel->setText("");
     }
 
-    if(event == eventFlag::clearAll){
+    if(event == eventFlag::clearAll || event == eventFlag::eqPressed){
         lParenCount = 0;
         ui->bParenR->setEnabled(false);
     }
@@ -536,23 +545,63 @@ void MainWindow::addFunction(){
 }
 
 void MainWindow::textInput(){
+    ui->bText->setChecked(true);
     ui->bBasic->setChecked(false);
+    ui->bsDev->setChecked(false);
     ui->stackedWidget->setCurrentIndex(1);
+    event = eventFlag::None;
 }
 
 void MainWindow::basicInput(){
+    ui->bBasic->setChecked(true);
     ui->bText->setChecked(false);
+    ui->bsDev->setChecked(false);
     ui->stackedWidget->setCurrentIndex(0);
     QMetaObject::invokeMethod(ui->bAllClear, "clicked");
 
 }
 
 void MainWindow::calcInput(){
-    QString str = ui->lineEdit->text();
-    try{
-        ui->lineEdit->setText( QString::number(math.evaluate(str), 'g', 12) );
+    if(event != eventFlag::eqPressed){
+        QString str = ui->lineEdit->text();
+        try{
+            ui->listWidget->addItem(ui->lineEdit->text());
+            ui->listWidget->addItem(QString("= ") + QString::number(math.evaluate(str), 'g', 12));
+        }
+        catch(CDMathException e){
+           ui->lineEdit->setText(e.what());
+        }
+        event = eventFlag::eqPressed;
     }
-    catch(CDMathException e){
-       ui->lineEdit->setText(e.what());
+}
+
+void MainWindow::on_lineEdit_textEdited(const QString &arg1)
+{
+    if(event == eventFlag::eqPressed){
+        ui->lineEdit->setText(arg1.right(1));
     }
+    event = eventFlag::None;
+}
+
+void MainWindow::sDev(){
+    ui->bText->setChecked(false);
+    ui->bBasic->setChecked(false);
+    ui->bsDev->setChecked(true);
+}
+
+void MainWindow::clearList(){
+    ui->listWidget->clear();
+}
+
+
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+    QString str = item->text();
+    if(str.left(2) == "= "){
+        str = str.right(str.length() - 2);
+    }
+    QString tmp = ui->lineEdit->text();
+    str = tmp.left(ui->lineEdit->cursorPosition()) + str + tmp.right(tmp.length() - ui->lineEdit->cursorPosition());
+    ui->lineEdit->setText(str);
+
 }

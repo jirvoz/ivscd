@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>834</width>
-    <height>578</height>
+    <height>605</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -27,7 +27,7 @@ font-family: Ubuntu;</string>
    <property name="styleSheet">
     <string notr="true">background-color: rgba(0,0,0,0);</string>
    </property>
-   <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,1,3,0" columnstretch="0,0,0" rowminimumheight="25,0,0,0">
+   <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,1,3" columnstretch="0,0,0" rowminimumheight="25,0,0">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -57,7 +57,6 @@ font-family: Ubuntu;</string>
       <property name="lineWidth">
        <number>1</number>
       </property>
-      <zorder>displayFrame</zorder>
      </widget>
     </item>
     <item row="1" column="0" rowspan="2" alignment="Qt::AlignHCenter">
@@ -71,6 +70,9 @@ font-family: Ubuntu;</string>
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
       </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="styleSheet">
        <string notr="true">QFrame{ background-color:  qlineargradient(spread:pad, x1:0, y1:0.528, x2:1, y2:0.534, stop:0 rgba(65, 65, 65, 255), stop:1 rgba(131, 131, 131, 255)); }
 
@@ -78,7 +80,7 @@ font-family: Ubuntu;</string>
 QPushButton { background-color: rgba(0, 0, 0, 0); }
 QPushButton:pressed { background-color: rgba(255, 255, 255, 75);  }
 QPushButton:hover:!pressed { border: 1px solid rgb(238, 152, 45); background-color: rgba(238, 152, 45, 75); }
-QPushButton:checked { background-color: rgba(255,255,255,100); }</string>
+QPushButton:checked { background-color: rgba(31, 171, 0, 200); }</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::Box</enum>
@@ -89,7 +91,7 @@ QPushButton:checked { background-color: rgba(255,255,255,100); }</string>
       <property name="lineWidth">
        <number>1</number>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0,0">
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,1,0,0">
        <property name="spacing">
         <number>5</number>
        </property>
@@ -151,6 +153,32 @@ QPushButton:checked { background-color: rgba(255,255,255,100); }</string>
          <property name="icon">
           <iconset resource="resources.qrc">
            <normaloff>:/img/img/text.png</normaloff>:/img/img/text.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bsDev">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="toolTip">
+          <string>sDeviation</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/img/img/sdev.png</normaloff>:/img/img/sdev.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -269,7 +297,7 @@ QPushButton:checked { background-color: rgba(255,255,255,100); }</string>
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="basicPage">
        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0">
@@ -295,6 +323,9 @@ QPushButton:checked { background-color: rgba(255,255,255,100); }</string>
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -1676,11 +1707,14 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          </widget>
         </item>
        </layout>
-       <zorder>bAdd</zorder>
-       <zorder>bFrame</zorder>
-       <zorder>basicWidgetsFrame</zorder>
       </widget>
       <widget class="QWidget" name="textInputPage">
+       <property name="styleSheet">
+        <string notr="true">QPushButton { background-color: rgba(0, 0, 0, 0); color: white;}
+QPushButton:pressed { background-color: rgba(255, 255, 255, 75);  }
+QPushButton:hover:!pressed { border: 1px solid rgb(238, 152, 45); background-color: rgba(238, 152, 45, 75); }
+QPushButton:disabled {color: rgb(136, 136, 136)}</string>
+       </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
          <number>0</number>
@@ -1698,17 +1732,14 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
          <number>0</number>
         </property>
         <item>
-         <widget class="QFrame" name="frame">
+         <widget class="QFrame" name="textInputFrame">
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,0">
-           <property name="spacing">
-            <number>0</number>
-           </property>
+          <layout class="QGridLayout" name="gridLayout_4" rowstretch="0,1,0" columnstretch="0,1">
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -1721,17 +1752,69 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item>
-            <widget class="QListWidget" name="listWidget">
-             <property name="lineWidth">
-              <number>0</number>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="clearList">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(138, 150, 255);</string>
+             </property>
+             <property name="text">
+              <string>CLEAR</string>
              </property>
             </widget>
            </item>
-           <item>
+           <item row="0" column="1">
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QListWidget" name="listWidget">
+             <property name="font">
+              <font>
+               <pointsize>20</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color:white;</string>
+             </property>
+             <property name="lineWidth">
+              <number>0</number>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>false</bool>
+             </property>
+             <property name="horizontalScrollMode">
+              <enum>QAbstractItemView::ScrollPerPixel</enum>
+             </property>
+             <property name="viewMode">
+              <enum>QListView::ListMode</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
             <widget class="QLineEdit" name="lineEdit">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -1757,6 +1840,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="sDevPage"/>
      </widget>
     </item>
    </layout>
