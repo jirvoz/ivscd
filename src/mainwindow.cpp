@@ -570,16 +570,20 @@ void MainWindow::calcInput(){
         bool error = false;
         bool ok = false;
         for(auto i:lst){
-            i.trimmed().toDouble(&ok);
-            if(!ok){
-                error = true;
-                break;
+            if(!i.trimmed().isEmpty()){
+                i.trimmed().toDouble(&ok);
+                if(!ok){
+                    error = true;
+                    break;
+                }
             }
         }
         if(!error){
             double *tmpArr = new double[lst.length()];
             for(int i = 0; i < lst.length(); i++){
-                tmpArr[i] = lst[i].trimmed().toDouble();
+                if(!lst[i].trimmed().isEmpty()){
+                    tmpArr[i] = lst[i].trimmed().toDouble();
+                }
             }
 
             ui->listWidget->addItem(ui->lineEdit->text());
