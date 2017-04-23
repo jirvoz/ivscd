@@ -1,10 +1,9 @@
-=======
 
 # IVSCD CALCULATOR
  README for school project of subject "Practical aspects of software design"
  ***
  
- IVSCD Calculator is a calculator processing basic mathematical functions, standart deviation, factorial, logarithm, natural logarithm and goniometric functions.
+ IVSCD Calculator can evaluate expressions with operators **+-*/^**, **brackets** and few basic **functions** like **sin**, **cos**, **tan**, and **natural and common logarithm**.
 
 ## Platform
 Ubuntu 64bit
@@ -19,19 +18,38 @@ Ubuntu 64bit
 
 
 ## License
-This program is provided under GNU General Public License v2.0.
+This program is provided under GNU General Public License v2.0.More in *LICENSE* file.
 
-## Installation 
-``` console
-$ sudo make install
-```
-## Uninstallation
-```
-$ sudo uninstall
-```
 ## Build
-``` console
-$ cd src
-$ make
+Building main application:
 ```
- 
+$ cd src    # cd to source code
+$ qmake     # generate makefile
+$ make      # compile main application
+```
+Tests:
+```
+$ cd src       # cd to source
+$ qmake        # generate makefile
+$ make tests   # build and run tests
+```
+
+## Install
+Debian package:
+```
+$ cd src       # cd to source
+$ qmake        # generate makefile
+$ make deb     # create debian package
+$ dpkg -i ivs_1.0-1.deb	 # install with dpkg
+```
+Direct installation:
+```
+$ cd src        # cd to source
+$ qmake         # generate makefile
+$ make install  # install app (make unistall to remove)
+```
+
+
+
+
+
