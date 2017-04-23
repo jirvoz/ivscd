@@ -46,6 +46,7 @@ private:
      * @brief Operator enum for operator stack and properties.
      */
     enum class Operator { PARENTHESIS, ///< opening parenthesis
+                          UNARY_MINUS, ///< unary minus
                           ADD, ///< plus
                           SUBTRACT, ///< minus
                           MULTIPLY, ///< times
