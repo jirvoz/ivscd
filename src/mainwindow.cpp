@@ -191,8 +191,11 @@ void MainWindow::equalsPressed(){
         }
 
         ui->inputLabel->setText(str);
+        ui->listWidget->addItem(str);
         try{
-            ui->resultLabel->setText(QString::number(math.evaluate(str)));
+            QString result = QString::number(math.evaluate(str));
+            ui->resultLabel->setText(result);
+            ui->listWidget->addItem("= " + QString::number(math.evaluate(str)));
         }
         catch(CDMathException e){
             ui->infoLabel->setText(e.what());
@@ -495,7 +498,7 @@ void MainWindow::clearFlags(){
         ui->inputLabel->setText("");
     }
 
-    if(event == eventFlag::clearAll || event == eventFlag::binOp || event == eventFlag::Mem
+    if(event == eventFlag::clearAll || event == eventFlag::binOp
                                     || event == eventFlag::rParen || event == eventFlag::setMem){
 
         ui->resultLabel->setText("0");
@@ -550,6 +553,7 @@ void MainWindow::textInput(){
     ui->bsDev->setChecked(false);
     ui->stackedWidget->setCurrentIndex(1);
     event = eventFlag::None;
+    sDevChecked = false;
 }
 
 void MainWindow::basicInput(){
@@ -557,23 +561,50 @@ void MainWindow::basicInput(){
     ui->bText->setChecked(false);
     ui->bsDev->setChecked(false);
     ui->stackedWidget->setCurrentIndex(0);
-    QMetaObject::invokeMethod(ui->bAllClear, "clicked");
-
 }
 
 void MainWindow::calcInput(){
     if(event != eventFlag::eqPressed){
-        QString str = ui->lineEdit->text();
+    if(sDevChecked){
+        QStringList lst = ui->lineEdit->text().split(" ");
+        bool error = false;
+        bool ok = false;
+        for(auto i:lst){
+            i.trimmed().toDouble(&ok);
+            if(!ok){
+                error = true;
+                break;
+            }
+        }
+        if(!error){
+            double *tmpArr = new double[lst.length()];
+            for(int i = 0; i < lst.length(); i++){
+                tmpArr[i] = lst[i].trimmed().toDouble();
+            }
+
+            ui->listWidget->addItem(ui->lineEdit->text());
+            QString result = QString::number(math.standardDeviation(lst.length(), tmpArr), 'g', 12);
+            ui->listWidget->addItem(QString("= ") + result);
+            ui->lineEdit->setText(result);
+            delete[] tmpArr;
+        }
+        else{
+            ui->listWidget->addItem(ui->lineEdit->text());
+            ui->lineEdit->setText("Value Error !");
+        }
+    }
+    else{
         try{
             ui->listWidget->addItem(ui->lineEdit->text());
-            QString result = QString::number(math.evaluate(str), 'g', 12);
+            QString result = QString::number(math.evaluate(ui->lineEdit->text()), 'g', 12);
             ui->listWidget->addItem(QString("= ") + result);
             ui->lineEdit->setText(result);
         }
         catch(CDMathException e){
            ui->lineEdit->setText(e.what());
         }
-        event = eventFlag::eqPressed;
+    }
+    event = eventFlag::eqPressed;
     }
 }
 
@@ -589,6 +620,8 @@ void MainWindow::sDev(){
     ui->bText->setChecked(false);
     ui->bBasic->setChecked(false);
     ui->bsDev->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
+    sDevChecked = true;
 }
 
 void MainWindow::clearList(){
@@ -602,8 +635,14 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     if(str.left(2) == "= "){
         str = str.right(str.length() - 2);
     }
-    QString tmp = ui->lineEdit->text();
-    str = tmp.left(ui->lineEdit->cursorPosition()) + str + tmp.right(tmp.length() - ui->lineEdit->cursorPosition());
-    ui->lineEdit->setText(str);
+    if(event == eventFlag::eqPressed){
+        ui->lineEdit->setText(str);
+    }
+    else{
+        QString tmp = ui->lineEdit->text();
+        str = tmp.left(ui->lineEdit->cursorPosition()) + str + tmp.right(tmp.length() - ui->lineEdit->cursorPosition());
+        ui->lineEdit->setText(str);
+    }
+    event = eventFlag::None;
 
 }

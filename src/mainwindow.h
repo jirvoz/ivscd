@@ -253,6 +253,8 @@ private:
      */
     eventFlag event = eventFlag::None;
 
+    bool sDevChecked = false;
+
 
 };
 
