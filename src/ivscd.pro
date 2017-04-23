@@ -16,10 +16,11 @@ CONFIG += c++11
 SOURCES += main.cpp\
         mainwindow.cpp \
     cdmath.cpp \
-    ../../../2/ivscd -sdeviation (copy)/sdeviation.cpp
+   sdeviation.cpp
 
 HEADERS  += mainwindow.h \
-    cdmath.h
+    cdmath.h \
+    sdeviation.h
 
 FORMS    += mainwindow.ui
 
