@@ -48,7 +48,9 @@ $ cd src        # cd to source
 $ qmake         # generate makefile
 $ make install  # install app (make unistall to remove)
 ```
-================================SLOVAK VERSION================================
+
+
+================================SLOVAK VERSION OF README================================
 
 
 # IVSCD CALCULATOR
