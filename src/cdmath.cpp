@@ -262,6 +262,7 @@ double CDMath::factorial(double n)
         result *= i;
 
     return result;
+}
 
 double CDMath::mean(int paramCount, double *items)
 {
