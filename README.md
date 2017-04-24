@@ -48,17 +48,15 @@ $ cd src        # cd to source
 $ qmake         # generate makefile
 $ make install  # install app (make unistall to remove)
 ```
-===================================================================================================================
-SLOVAK VERSION
-===================================================================================================================
+================================SLOVAK VERSION================================
 
 
 # IVSCD CALCULATOR
  README súbor pre projekt z predmetu "Praktické aspekty vývoja software"
  ***
  
- IVSCD Calculator je kalkulačka počítajúca základné matematické funkcie, smerodatnú odchýlku, faktoriál,
- logaritmus, prirodzený logaritmus a goniometrické funkcie.
+ IVSCD Calculator je kalkulačka počítajúca základné matematické funkcie, **výberovú smerodatnú odchýlku**, **faktoriál**,
+ **logaritmus**, **prirodzený logaritmus** a **goniometrické funkcie**.
 
 ## Prostredie
 Ubuntu 64bit
@@ -70,23 +68,37 @@ Ubuntu 64bit
  *  *xlabud05* Dominika Labudova
  *  *xmeryj00* Jozef Mery
  *  *xradse00* Vlastimil Radsetoulal
-
+ 
 
 ## Licencia
-Tento program je poskytovaný pod licenciou GNU General Public License v2.0.
+This program is provided under GNU General Public License v2.0.More in *LICENSE* file.
 
-## Inštalácia 
-``` console
-$ sudo make install
-```
-## Odinštalovanie
-```
-$ sudo uninstall
-```
 ## Kompilácia
-``` console
-$ cd src
-$ make
+Building main application:
 ```
+$ cd src    # cd to source code
+$ qmake     # generate makefile
+$ make      # compile main application
+```
+Testy:
+```
+$ cd src       # cd to source
+$ qmake        # generate makefile
+$ make tests   # build and run tests
+```
+
+## Inštalácia
+Debian balíček:
+```
+$ cd src       # cd to source
+$ qmake        # generate makefile
+$ make deb     # create debian package
+$ dpkg -i ivs_1.0-1.deb	 # install with dpkg
+```
+Priama inštalácia:
+```
+$ cd src        # cd to source
+$ qmake         # generate makefile
+$ make install  # install app (make unistall to remove)
  
 
