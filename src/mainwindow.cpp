@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     }
     // functions
-    QPushButton* funcList[] = {ui->bLog, ui->bLn, ui->bSin, ui->bCos, ui->bTan, ui->bSqrt, ui->bAbs };
+    QPushButton* funcList[] = {ui->bLog, ui->bLn, ui->bSin, ui->bCos, ui->bTan, ui->bSqrt, ui->bAbs, ui->bFact };
 
     for(auto i:funcList){
 
@@ -53,8 +53,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->bAllClear, SIGNAL(clicked()), this, SLOT(clearAll()));
 
     connect(ui->bPi, SIGNAL(clicked()), this, SLOT(setPi()));
-
-    connect(ui->bEuler, SIGNAL(clicked()), this, SLOT(setEuler()));
 
     connect(ui->bMR, SIGNAL(clicked()), this, SLOT(memoryRead()));
 
@@ -346,8 +344,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event ){
     if(event->key() == Qt::Key_Percent ){
         ui->bMod->animateClick();
     }
-    if(event->key() == Qt::Key_E ){
-        ui->bEuler->animateClick();
+    if(event->key() == Qt::Key_F ){
+        ui->bFact->animateClick();
     }
     if(event->key() == Qt::Key_P ){
         ui->bPi->animateClick();
@@ -378,12 +376,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event ){
 void MainWindow::setPi(){
     clearFlags();
     ui->resultLabel->setText(QString::number(M_PI, 'g', 15));
-    event = eventFlag::Num;
-}
-
-void MainWindow::setEuler(){
-    clearFlags();
-    ui->resultLabel->setText(QString::number(M_E, 'g', 15));
     event = eventFlag::Num;
 }
 
@@ -536,6 +528,10 @@ void MainWindow::addFunction(){
     if(sender() == ui->bSqrt){
         tmp = "sqrt";
     }
+    if(sender() == ui->bFact){
+        tmp = "fact";
+    }
+
     else{
         tmp = qobject_cast<QPushButton*>(sender())->text();
     }
