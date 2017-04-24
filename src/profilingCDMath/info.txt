@@ -1,0 +1,2 @@
+This folder contains CDMath.cpp and CDMath.h used for standardDeviation separate module
+for profiling as it uses just stdin/out and doesnt support work with QT tools. 

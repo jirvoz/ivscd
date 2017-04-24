@@ -297,7 +297,11 @@ QPushButton:checked { background-color: rgba(31, 171, 0, 200); }</string>
        <number>0</number>
       </property>
       <property name="currentIndex">
+<<<<<<< HEAD
        <number>2</number>
+=======
+       <number>0</number>
+>>>>>>> c6a5f600192ac0ec6728a9d519bd631a3867d16b
       </property>
       <widget class="QWidget" name="basicPage">
        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0">
@@ -1103,7 +1107,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
                </widget>
               </item>
               <item row="4" column="5">
-               <widget class="QPushButton" name="bEuler">
+               <widget class="QPushButton" name="bFact">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>1</horstretch>
@@ -1125,7 +1129,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
                  <enum>Qt::NoFocus</enum>
                 </property>
                 <property name="text">
-                 <string>e</string>
+                 <string>!</string>
                 </property>
                 <property name="flat">
                  <bool>false</bool>
@@ -1893,7 +1897,7 @@ QPushButton:disabled {color: rgb(136, 136, 136)}</string>
   <tabstop>bSign</tabstop>
   <tabstop>bParenL</tabstop>
   <tabstop>bParenR</tabstop>
-  <tabstop>bEuler</tabstop>
+  <tabstop>bFact</tabstop>
   <tabstop>bPi</tabstop>
  </tabstops>
  <resources>

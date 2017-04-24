@@ -18,7 +18,14 @@ private Q_SLOTS:
     void testPower();
     void testUnaryMinus();
     void testAbs();
+<<<<<<< HEAD
 
+=======
+    void testSDev();
+    void testCmathFunctions();
+    void testExceptions();
+    void testFactorial();
+>>>>>>> 9a74a7dc3595b095084e617f7c7098ebb0d865c0
     void testSDev();
 
     void testCmathFunctions();
@@ -80,7 +87,6 @@ void CDMathTests::testAbs()
     QCOMPARE(cdMath.evaluate(QString("2 + abs(1-4) * 3")), 11.0);
 }
 
-
 void CDMathTests::testSDev()
 {
     double items[3] = {5.0, 3, 12.0};
@@ -97,7 +103,7 @@ void CDMathTests::testSDev()
 
     double items5[5] = {12, 13.568, 23, 120, 3.1415926535};
     QCOMPARE(cdMath.standardDeviation(5, items5), 48.399698828);
-}
+
 
 void CDMathTests::testCmathFunctions()
 {

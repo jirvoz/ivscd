@@ -22,6 +22,7 @@ CDMath::CDMath()
     initOperator(Operator::TAN, 6, OpAsociativity::RIGHT);
     initOperator(Operator::LN, 6, OpAsociativity::RIGHT);
     initOperator(Operator::LOG, 6, OpAsociativity::RIGHT);
+    initOperator(Operator::FACT, 6, OpAsociativity::RIGHT);
 
     //initialize functions
     functions.insert("sqrt", Operator::SQRT);
@@ -32,6 +33,7 @@ CDMath::CDMath()
     functions.insert("tg", Operator::TAN); //alias for tan
     functions.insert("ln", Operator::LN);
     functions.insert("log", Operator::LOG);
+    functions.insert("fact", Operator::FACT);
 }
 
 void CDMath::initOperator(Operator op, int prec, OpAsociativity asoc)
@@ -165,11 +167,16 @@ void CDMath::commitTopOperator()
             throw MathException("Logarithm of nonpositive number.");
         numberStack.push(log10(a));
         break;
+    case Operator::FACT:
+        if (numberStack.size() < 1)
+            throw SyntaxException();
+        a = numberStack.pop();
+        numberStack.push(factorial(a));
+        break;
     default:
         break;
     }
 }
-
 
 double CDMath::power(double x, double y)
 {
@@ -243,6 +250,19 @@ double CDMath::squareRoot(double a, double b)
    double y = 1/b;
    return power(a, y);
 
+}
+
+double CDMath::factorial(double n)
+{
+    if (n < 0)
+        throw MathException("Factorial of negative number.");
+
+    double result = 1;
+
+    for (double i = 2; i <= n; i += 1)
+        result *= i;
+
+    return result;
 }
 
 double CDMath::mean(int paramCount, double *items)
