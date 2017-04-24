@@ -98,12 +98,6 @@ private slots:
     void setPi();
 
     /**
-     * @brief Sets Pi constant to resultLabel.
-     * Event handler for buttonpress.
-     */
-    void setEuler();
-
-    /**
      * @brief Handles keyboard input.
      * @param event QKeyEvent object with event information.
      * Calls animation of buttons.

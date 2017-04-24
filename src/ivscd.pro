@@ -17,16 +17,8 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     cdmath.cpp
 
-    cdmath.cpp
-
 HEADERS  += mainwindow.h \
     cdmath.h
-
-    cdmath.cpp \
-
-HEADERS  += mainwindow.h \
-    cdmath.h \
-
 
 FORMS    += mainwindow.ui
 
