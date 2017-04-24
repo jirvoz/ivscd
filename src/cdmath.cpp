@@ -249,6 +249,7 @@ double CDMath::squareRoot(double a, double b)
 {
    double y = 1/b;
    return power(a, y);
+
 }
 
 double CDMath::factorial(double n)
@@ -275,6 +276,7 @@ double CDMath::mean(int paramCount, double *items)
     }
 
     return mean/paramCount;
+
 }
 
 double CDMath::evaluate(QString expression)

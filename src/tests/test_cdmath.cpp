@@ -18,7 +18,14 @@ private Q_SLOTS:
     void testPower();
     void testUnaryMinus();
     void testAbs();
+<<<<<<< HEAD
 
+=======
+    void testSDev();
+    void testCmathFunctions();
+    void testExceptions();
+    void testFactorial();
+>>>>>>> 9a74a7dc3595b095084e617f7c7098ebb0d865c0
     void testSDev();
 
     void testCmathFunctions();
@@ -124,3 +131,4 @@ void CDMathTests::testExceptions()
 QTEST_APPLESS_MAIN(CDMathTests)
 
 #include "test_cdmath.moc"
+
