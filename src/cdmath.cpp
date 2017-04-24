@@ -262,6 +262,18 @@ double CDMath::factorial(double n)
         result *= i;
 
     return result;
+
+double CDMath::mean(int paramCount, double *items)
+{
+
+    double mean = 0;
+
+    for(int i = 0; i < paramCount; i++)
+    {
+        mean += items[i];
+    }
+
+    return mean/paramCount;
 }
 
 double CDMath::evaluate(QString expression)
@@ -369,4 +381,24 @@ double CDMath::evaluate(QString expression)
     if (numberStack.size() != 1)
         throw SyntaxException();
     return numberStack.pop();
+}
+
+double CDMath::standardDeviation(int paramCount, double *items)
+{
+    double sum = 0;
+
+    for(int i = 0; i < paramCount; i++)
+    {
+        sum += CDMath::power(items[i], 2);
+    }
+
+    double mean = CDMath::mean(paramCount, items);
+
+    double subRes = sum - (paramCount * CDMath::power(mean, 2));
+
+    double res;
+    res = (1.0/(paramCount - 1)) * subRes;
+    res = CDMath::squareRoot(res, 2);
+
+    return res;
 }

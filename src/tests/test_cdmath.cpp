@@ -19,6 +19,7 @@ private Q_SLOTS:
     void testUnaryMinus();
     void testAbs();
     void testFactorial();
+    void testSDev();
     void testCmathFunctions();
     void testExceptions();
 };
@@ -85,6 +86,24 @@ void CDMathTests::testFactorial()
     QCOMPARE(cdMath.factorial(8), 40320.0);
     QCOMPARE(cdMath.evaluate(QString("fact(5)")), 120.0);
     QVERIFY_EXCEPTION_THROWN(cdMath.factorial(-1), MathException);
+}
+
+void CDMathTests::testSDev()
+{
+    double items[3] = {5.0, 3, 12.0};
+    QCOMPARE(cdMath.standardDeviation(3, items), 4.72581562625);
+
+    double items2[6] = {60.654, 3.6, 12.25, 42, 10, -5.2};
+    QCOMPARE(cdMath.standardDeviation(6, items2), 25.2942318062);
+
+    double items3[5] = {42, 42, 42, 42, 42};
+    QCOMPARE(cdMath.standardDeviation(5, items3), 0.00000000000);
+
+    double items4[5] = {-60, 1, 42, 26, 3.1415926535};
+    QCOMPARE(cdMath.standardDeviation(5, items4), 38.7987949232);
+
+    double items5[5] = {12, 13.568, 23, 120, 3.1415926535};
+    QCOMPARE(cdMath.standardDeviation(5, items5), 48.399698828);
 }
 
 void CDMathTests::testCmathFunctions()

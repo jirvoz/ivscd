@@ -23,12 +23,21 @@ public:
     static double power(double x, double y);
 
     /**
-     * @brief Returns the square root of number
+     * @brief computes the square root of number
      * @param a base
      * @param b square root
      * @return a^(1/b)
      */
     static double squareRoot(double a, double b);
+
+
+    /**
+     * @brief computes mean of the items file
+     * @param paramCount the number of items in file
+     * @param items file of the values to compute with
+     * @return mean
+     */
+    static double mean(int paramCount, double *items);
 
     /**
      * @brief Basic factorial function
@@ -50,6 +59,14 @@ public:
      * @return numeric result of expression
      */
     double evaluate(QString expression);
+
+    /**
+     * @brief Returns the standard deviation of double values passed as sec. arg.
+     * @param paramCount number of double values entered
+     * @param items array of double values to compute with
+     * @return standard deviation of items
+     */
+    double standardDeviation(int paramCount, double *items);
 
 private:
     /**
