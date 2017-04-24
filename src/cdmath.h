@@ -4,6 +4,7 @@
 #include <QString>
 #include <QMap>
 #include <QStack>
+#include <QException>
 
 /**
  * @brief Pack of methods for evaluating mathematical expressions.
@@ -22,12 +23,21 @@ public:
     static double power(double x, double y);
 
     /**
-     * @brief Returns the square root of number
+     * @brief computes the square root of number
      * @param a base
      * @param b square root
      * @return a^(1/b)
      */
     static double squareRoot(double a, double b);
+
+
+    /**
+     * @brief computes mean of the items file
+     * @param paramCount the number of items in file
+     * @param items file of the values to compute with
+     * @return mean
+     */
+    static double mean(int paramCount, double *items);
 
     /**
      * @brief Evaluates and calculates expression passed in QString
@@ -40,17 +50,33 @@ public:
      */
     double evaluate(QString expression);
 
+    /**
+     * @brief Returns the standard deviation of double values passed as sec. arg.
+     * @param paramCount number of double values entered
+     * @param items array of double values to compute with
+     * @return standard deviation of items
+     */
+    double standardDeviation(int paramCount, double *items);
+
 private:
     /**
      * @brief Operator enum for operator stack and properties.
      */
     enum class Operator { PARENTHESIS, ///< opening parenthesis
+                          UNARY_MINUS, ///< unary minus
                           ADD, ///< plus
                           SUBTRACT, ///< minus
                           MULTIPLY, ///< times
                           DIVIDE, ///< division
+                          MOD, ///< modulo
                           POWER, ///< exponentiation
+                          SQRT, ///< square root
                           ABS, ///< absolute value
+                          SIN, ///< sine
+                          COS, ///< cosine
+                          TAN, ///< tangent
+                          LN, ///< natural logarithm
+                          LOG, ///< common (10) logarithm
                           OPERATORS_COUNT /**<
                                 * last value for OpProperties array
                                 *  allocation */
@@ -160,6 +186,61 @@ private:
      * @return absolute value of a number
      */
     static double fabs(double n);
+};
+
+/**
+ * @brief Generic Exception for CDMath library.
+ *
+ * CDMathException is generic exception to be inherited
+ * by other specific exceptions in CDMath.
+ */
+class CDMathException : public QException
+{
+protected:
+    QString message; ///< message to be retuned in e.what()
+public:
+    /**
+     * @brief Returns message with exception description.
+     * @return exception message as const char*
+     */
+    virtual const char* what() const throw()
+    {
+        return message.toLocal8Bit().constData();
+    }
+};
+
+/**
+ * @brief Exception for bad mathematical operations like division by zero.
+ */
+class MathException : public CDMathException
+{
+public:
+    /**
+     * @brief Basic MathException constructor.
+     */
+    MathException() { message = "Math error."; }
+    /**
+     * @brief Constructor for MathException with custom message.
+     * @param detail message to be added to error message
+     */
+    MathException(QString detail) { message = "Math error: " + detail; }
+};
+
+/**
+ * @brief Exception for mistakes in expression for evaluate.
+ */
+class SyntaxException : public CDMathException
+{
+public:
+    /**
+     * @brief Basic SyntaxException constructor
+     */
+    SyntaxException() { message = "Syntax error."; }
+    /**
+     * @brief Constructor for SyntaxException with custom message.
+     * @param detail message to be added to error message
+     */
+    SyntaxException(QString detail) { message = "Syntax error: " + detail; }
 };
 
 #endif // CDMATH_H

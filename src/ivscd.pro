@@ -15,10 +15,10 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    cdmath.cpp
+    cdmath.cpp \
 
 HEADERS  += mainwindow.h \
-    cdmath.h
+    cdmath.h \
 
 FORMS    += mainwindow.ui
 
@@ -27,3 +27,6 @@ doc.depends = Doxyfile cdmath.h mainwindow.h cdmath.cpp mainwindow.cpp
 doc.commands = doxygen
 
 QMAKE_EXTRA_TARGETS += doc
+
+RESOURCES += \
+    resources.qrc
