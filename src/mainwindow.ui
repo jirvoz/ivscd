@@ -297,11 +297,7 @@ QPushButton:checked { background-color: rgba(31, 171, 0, 200); }</string>
        <number>0</number>
       </property>
       <property name="currentIndex">
-<<<<<<< HEAD
-       <number>2</number>
-=======
        <number>0</number>
->>>>>>> c6a5f600192ac0ec6728a9d519bd631a3867d16b
       </property>
       <widget class="QWidget" name="basicPage">
        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0">
