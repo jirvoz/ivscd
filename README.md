@@ -40,7 +40,7 @@ Debian package:
 $ cd src       # cd to source
 $ qmake        # generate makefile
 $ make deb     # create debian package
-$ dpkg -i ivs_1.0-1.deb	 # install with dpkg
+$ sudo dpkg -i ivs_1.0-1.deb	 # install with dpkg
 ```
 Direct installation:
 ```
@@ -95,7 +95,7 @@ Debian balíček:
 $ cd src       # cd to source
 $ qmake        # generate makefile
 $ make deb     # create debian package
-$ dpkg -i ivs_1.0-1.deb	 # install with dpkg
+$ sudo dpkg -i ivs_1.0-1.deb	 # install with dpkg
 ```
 Priama inštalácia:
 ```
