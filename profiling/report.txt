@@ -1,0 +1,29 @@
+In the output of profiling of standard deviation, using functions
+from mathematical library "CDMath" we found out, that program calls
+the most following functions: "cfrac", "ln" and "fabs". These functions
+are used by function "power" in order to get power of a nubmer.
+
+Function "power" was called in total 						1002 times.
+
+Functions "cfrac", "ln" and "fabs" were called int total   25018 times.
+
+The program supposedly spend the most of time on function "cfrac"
+and that would be 96.44% of time.
+
+That means that in optimalisation of the program and its code we should
+consider focusing on function cfrac.
+
+=============================================================================
+
+Vo výstupe profilingu výberovej smerodatnej odchylky, používajúcej 
+funkcie z matematickej knižnice "CDMath" sme zistili, že program najčastejšie
+volá funkcie "cfrac", "ln" a "fabs", ktoré sú používané funkciou "power", pre výpočet mocniny. 
+
+Funkcia power bola volaná celkom 		1002 krát.
+
+Funkcie cfrac, ln a fabs boli volané   25018 krát.
+
+Program trávil údajne najviac času na funkcii cfrac a to 96.44% času.
+
+Preto by sa pri optimalizácií rýchlosti programu bolo dobré zamerať
+práve na funkciu cfrac.
