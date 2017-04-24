@@ -18,12 +18,13 @@ private Q_SLOTS:
     void testPower();
     void testUnaryMinus();
     void testAbs();
-
     void testSDev();
-
     void testCmathFunctions();
     void testExceptions();
-
+    void testFactorial();
+    void testSDev();
+    void testCmathFunctions();
+    void testExceptions();
 };
 
 CDMathTests::CDMathTests()
@@ -80,6 +81,15 @@ void CDMathTests::testAbs()
     QCOMPARE(cdMath.evaluate(QString("2 + abs(1-4) * 3")), 11.0);
 }
 
+void CDMathTests::testFactorial()
+{
+    QCOMPARE(cdMath.factorial(0), 1.0);
+    QCOMPARE(cdMath.factorial(1), 1.0);
+    QCOMPARE(cdMath.factorial(2), 2.0);
+    QCOMPARE(cdMath.factorial(8), 40320.0);
+    QCOMPARE(cdMath.evaluate(QString("fact(5)")), 120.0);
+    QVERIFY_EXCEPTION_THROWN(cdMath.factorial(-1), MathException);
+}
 
 void CDMathTests::testSDev()
 {
@@ -119,7 +129,6 @@ void CDMathTests::testExceptions()
     QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1 + 8 9")), SyntaxException);
     QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("1+*8")), SyntaxException);
     QVERIFY_EXCEPTION_THROWN(cdMath.evaluate(QString("")), SyntaxException);
-
 }
 
 QTEST_APPLESS_MAIN(CDMathTests)
