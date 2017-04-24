@@ -18,6 +18,7 @@ private Q_SLOTS:
     void testPower();
     void testUnaryMinus();
     void testAbs();
+    void testFactorial();
     void testCmathFunctions();
     void testExceptions();
 };
@@ -74,6 +75,16 @@ void CDMathTests::testAbs()
     QCOMPARE(cdMath.evaluate(QString("abs(0-4)")), 4.0);
     QCOMPARE(cdMath.evaluate(QString("2 + abs(1-4) - 3")), 2.0);
     QCOMPARE(cdMath.evaluate(QString("2 + abs(1-4) * 3")), 11.0);
+}
+
+void CDMathTests::testFactorial()
+{
+    QCOMPARE(cdMath.factorial(0), 1.0);
+    QCOMPARE(cdMath.factorial(1), 1.0);
+    QCOMPARE(cdMath.factorial(2), 2.0);
+    QCOMPARE(cdMath.factorial(8), 40320.0);
+    QCOMPARE(cdMath.evaluate(QString("fact(5)")), 120.0);
+    QVERIFY_EXCEPTION_THROWN(cdMath.factorial(-1), MathException);
 }
 
 void CDMathTests::testCmathFunctions()

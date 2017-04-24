@@ -31,6 +31,16 @@ public:
     static double squareRoot(double a, double b);
 
     /**
+     * @brief Basic factorial function
+     *
+     * Computes factorial of floor value of parameter
+     * (even it takes and returns double).
+     * @param n
+     * @return factorial of floor value of n
+     */
+    static double factorial(double n);
+
+    /**
      * @brief Evaluates and calculates expression passed in QString
      *
      * Evaluates QString expression written in infix notation
@@ -60,6 +70,7 @@ private:
                           TAN, ///< tangent
                           LN, ///< natural logarithm
                           LOG, ///< common (10) logarithm
+                          FACT, ///< factorial
                           OPERATORS_COUNT /**<
                                 * last value for OpProperties array
                                 *  allocation */
